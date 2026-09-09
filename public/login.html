@@ -1,61 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de Login</title>
-   
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-         <link rel="stylesheet" href="../assets/css/login.css">
+    <title>Tela de Login</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+    >
+
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 
 <body>
+
     <main>
+
         <div>
-            <video class="video_inicial object-fit-scale" src="../Assets/videos/video.login.mp4" autoplay loop muted
-                playsinline></video>
+
+            <video
+                class="video_inicial object-fit-scale"
+                src="../assets/videos/video.login.mp4"
+                autoplay
+                loop
+                muted
+                playsinline>
+            </video>
+
             <div class="container_login">
-                <img src="../Assets/logos/logo_sem_fundo.png" alt="logo" class="logo_login">
+
+                <img
+                    src="../assets/logos/logo_sem_fundo.png"
+                    alt="Logo"
+                    class="logo_login"
+                >
+
                 <div id="form">
+
                     <form id="formLogin">
-                        <label class="label_login" for="email">Email</label>
-                        <input class="form_text" type="email" id="email" placeholder="email" required>
-                    <br>
-                        <label class="label_login" for="senha">Senha</label>
-                        <input class="form_text" type="password" id="senha" placeholder="senha" required>
+
+                        <label class="label_login" for="email">
+                            Email
+                        </label>
+
+                        <input
+                            class="form_text"
+                            type="email"
+                            id="email"
+                            placeholder="Email"
+                            required
+                        >
+
                         <br>
-                        
+
+                        <label class="label_login" for="senha">
+                            Senha
+                        </label>
+
+                        <input
+                            class="form_text"
+                            type="password"
+                            id="senha"
+                            placeholder="Senha"
+                            required
+                        >
+
+                        <br>
+
                         <div class="login_1">
-                            <label class="checkbox_login" for="termos">
-                                <input class="checkbox_login" type="checkbox" name="termos" id="termos" disabled required>
-                                <a href="../public/termo_de_uso.html" target="_blank" id="linkTermos"> Ler Termos de Uso </a>
+
+                            <input
+                                class="checkbox_login"
+                                type="checkbox"
+                                name="termos"
+                                id="termos"
+                                disabled
+                                required
+                            >
+
+                            <label for="termos">
+                                Aceito os
                             </label>
 
+                            <a
+                                href="../public/termo_de_uso.html"
+                                target="_blank"
+                                id="linkTermos"
+                            >
+                                Termos de Uso
+                            </a>
+
                         </div>
 
                         <div class="login_1">
-                            <a href="../public/cadastro.html" id="text_log" style="text-decoration: none; color: inherit; display: block; cursor: pointer; text-align: center;">Não possui conta? Cadastrar-se</a>
+
+                            <a
+                                href="../public/cadastro.html"
+                                id="text_log"
+                                style="
+                                    text-decoration: none;
+                                    color: inherit;
+                                    display: block;
+                                    cursor: pointer;
+                                    text-align: center;
+                                "
+                            >
+                                Não possui conta? Cadastrar-se
+                            </a>
+
                         </div>
 
                         <br>
-                        <button id="button_login" type="submit">Entrar</button>
+
+                        <button id="button_login" type="submit">
+                            Entrar
+                        </button>
+
                     </form>
+
                 </div>
+
             </div>
+
         </div>
+
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        crossorigin="anonymous">
+    </script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
         integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-        crossorigin="anonymous"></script>
-    
+        crossorigin="anonymous">
+    </script>
+
     <script src="../scripts/login.js"></script>
+
 </body>
 
 </html>

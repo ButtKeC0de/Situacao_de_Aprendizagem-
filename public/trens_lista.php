@@ -42,13 +42,13 @@ if ($resultado && $resultado->num_rows > 0) {
 
                 <div id="logos_barra_lateral">
                     <div>
-                        <a href="../public/home.html">
+                        <a href="../public/criação_rotas.html">
                             <img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas">
                         </a>
                     </div>
 
                     <div>
-                        <a href="../public/trens_lista.php">
+                        <a href="../public/home.html">
                             <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
                         </a>
                     </div>

@@ -58,19 +58,19 @@ if ($resultado) {
 
                 <div id="logos_barra_lateral">
                     <div>
-                        <a href="../public/home.html">
+                        <a href="../public/criação_rotas.html">
                             <img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas">
                         </a>
                     </div>
 
                     <div>
-                        <a href="../public/trens_lista.php">
+                        <a href="../public/home.html">
                             <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
                         </a>
                     </div>
 
                     <div> 
-                        <a href="../public/sensor_lista.php">
+                        <a href="../public/sensor_cadastro.html">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>

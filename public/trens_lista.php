@@ -26,7 +26,7 @@ if ($resultado && $resultado->num_rows > 0) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    <link rel="stylesheet" href="../assets/css/cadastro_trem.css">
+    <link rel="stylesheet" href="../assets/css/trem.css">
     <link rel="stylesheet" href="../assets/css/home.css">
 </head>
 
@@ -42,19 +42,19 @@ if ($resultado && $resultado->num_rows > 0) {
 
                 <div id="logos_barra_lateral">
                     <div>
-                        <a href="../public/home.html">
+                        <a href="../public/criação_rotas.html">
                             <img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas">
                         </a>
                     </div>
 
                     <div>
-                        <a href="../public/trens_lista.php">
+                        <a href="../public/home.html">
                             <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
                         </a>
                     </div>
 
                     <div> 
-                        <a href="../public/sensor_cadastro.html">
+                        <a href="../public/sensor.html">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>

@@ -103,7 +103,7 @@ $stmt_select->close();
                     </div>
 
                     <div> 
-                        <a href="../public/sensor_cadastro.html">
+                        <a href="../public/sensor.html">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>

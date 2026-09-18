@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
                                         </div>";
 
-                header("Location: sensor_lista.php");
+                header("Location: sensor_home.php");
                 exit();
             } else {
                 $mensagem = "<div class='alert alert-danger'>Erro ao cadastrar: " . $stmt->error . "</div>";
@@ -85,13 +85,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div>
-                        <a href="../public/home.html">
+                        <a href="../public/home.php">
                             <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
                         </a>
                     </div>
 
                     <div> 
-                        <a href="../public/sensor.html">
+                        <a href="../public/sensor_home.php">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>

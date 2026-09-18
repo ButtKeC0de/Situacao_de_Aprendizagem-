@@ -64,13 +64,13 @@ if ($resultado) {
                     </div>
 
                     <div>
-                        <a href="../public/home.html">
+                        <a href="../public/home.php">
                             <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
                         </a>
                     </div>
 
                     <div> 
-                        <a href="../public/sensor.html">
+                        <a href="../public/sensor_home.phps">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>

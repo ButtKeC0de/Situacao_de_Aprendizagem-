@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div id="logos_barra_lateral">
                     <div>
-                        <a href="../public/home.html">
+                        <a href="../public/home.php">
                             <img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas">
                         </a>
                     </div>
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div> 
-                        <a href="../public/sensor.html">
+                        <a href="../public/sensor_home.php">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>

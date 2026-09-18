@@ -1,18 +1,63 @@
 <?php
+
 session_start();
 
 require_once '../infra/conexao.php';
 
 $trens = [];
 
-$sql = "SELECT id_trem, modelo, apelido, empresa_operadora, tipo_trem, numero_vagoes FROM Trem ORDER BY id_trem DESC";
-$resultado = $conexao->query($sql);
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+if ($id) {
+
+    $sql = "SELECT
+                id_trem,
+                modelo,
+                apelido,
+                empresa_operadora,
+                tipo_trem,
+                numero_vagoes
+            FROM Trem
+            WHERE id_trem = ?";
+
+    $stmt = $conexao->prepare($sql);
+
+    $stmt->bind_param("i", $id);
+
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
+
+} else {
+
+    $sql = "SELECT
+                id_trem,
+                modelo,
+                apelido,
+                empresa_operadora,
+                tipo_trem,
+                numero_vagoes
+            FROM Trem
+            ORDER BY id_trem DESC";
+
+    $resultado = $conexao->query($sql);
+
+}
+
 
 if ($resultado && $resultado->num_rows > 0) {
+
     while ($row = $resultado->fetch_assoc()) {
         $trens[] = $row;
     }
+
 }
+
+
+if (isset($stmt)) {
+    $stmt->close();
+}
+
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -48,13 +93,13 @@ if ($resultado && $resultado->num_rows > 0) {
                     </div>
 
                     <div>
-                        <a href="../public/home.html">
+                        <a href="../public/home.php">
                             <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
                         </a>
                     </div>
 
                     <div> 
-                        <a href="../public/sensor.html">
+                        <a href="../public/sensor_home.php">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>

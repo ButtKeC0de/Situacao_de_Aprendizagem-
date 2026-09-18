@@ -3,13 +3,9 @@
     src: url('../Assets/fonts/Font_.otf');
 }
 
-
-
 .bg_yelllow {
-
     background-color: rgb(248, 164, 62);
     border: none;
-
 }
 
 .black_conteiner {
@@ -17,12 +13,9 @@
     background-color: black;
     color: white;
     width: 160px;
-
 }
 
-
 .navbar-brand {
-
     gap: 20px;
     font-size: 30px;
     white-space: nowrap;
@@ -34,7 +27,7 @@
 body {
     margin: 0;
     padding: 0;
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
 
 video {
@@ -46,7 +39,6 @@ video {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
 }
-
 
 #butao h2 {
     font-size: 1.5rem;
@@ -67,27 +59,20 @@ video {
 
 .botao_entrar{
     height: 60px;
-
-
 }
 
 .Railview{
-
     color: rgb(0, 0, 0);
-
 }
 
 .card {
     background-color:rgb(248, 164, 62);
-
 }
 
 .mid-btt{
-
-
-        align-items: center;
-        text-align: center;
-        justify-content: center;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
 #button_press {
@@ -101,21 +86,18 @@ video {
     font-size: 30px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
-     }
+}
 
-     .card-custom-laranja {
+.card-custom-laranja {
     background-color: #fca339 !important; 
     border-radius: 24px !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     padding: 8px;
     cursor: pointer;
-
-
     transition-duration: 600ms;
     transition-timing-function: ease;
     transition-property: background-color, transform; 
 }
-
 
 .card-custom-laranja:is(:hover, :focus) {
     transform: scale(1.03);
@@ -123,23 +105,18 @@ video {
     outline: none;
 }
 
-
-
 .card-anima-item {
     opacity: 0;
     transform: translateX(-60px);
-    
     transition-property: transform, opacity;
     transition-duration: 1s; 
     transition-timing-function: ease;
 }
 
-
 .wrapper-cards:is(:hover, :focus) .card-anima-item {
     transform: translateX(0);
     opacity: 1; 
 }
-
 
 .wrapper-cards .card-esquerda {
     transition-delay: 0ms; 
@@ -149,12 +126,9 @@ video {
     transition-delay: 200ms; 
 }
 
-
 .wrapper-cards:focus {
     outline: none;
 }
-
-
 
 .card-custom-laranja {
     background-color: #fca339 !important;

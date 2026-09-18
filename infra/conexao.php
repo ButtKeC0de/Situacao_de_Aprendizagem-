@@ -2,9 +2,9 @@
 
 $host = "localhost";
 $usuario = "root";
-$senha = "";
-$banco = "rail_view_db";
-$porta = 6608;
+$senha = "root";
+$banco = "ferrorama_db";
+$porta = 3306;
 
 $conexao = new mysqli($host, $usuario, $senha, $banco, $porta);
 

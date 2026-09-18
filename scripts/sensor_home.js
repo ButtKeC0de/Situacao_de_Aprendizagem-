@@ -1,13 +1,13 @@
-const trens = document.querySelectorAll(".trem");
+const sensores = document.querySelectorAll(".sensor");
 
-trens.forEach((trem) => {
+sensores.forEach((sensor) => {
 
-    trem.addEventListener("click", () => {
+    sensor.addEventListener("click", () => {
 
-        const id = trem.dataset.id;
+        const id = sensor.dataset.id;
 
         window.location.href =
-            `trens_lista.php?id=${encodeURIComponent(id)}`;
+            `sensor_lista.php?id=${encodeURIComponent(id)}`;
 
     });
 
@@ -28,24 +28,24 @@ if (pesquisa) {
             ""
         );
 
-        trens.forEach((trem) => {
+        sensores.forEach((sensor) => {
 
             const id =
-                trem.dataset.id.toLowerCase();
+                sensor.dataset.id.toLowerCase();
 
             const texto =
-                trem.textContent.toLowerCase();
+                sensor.textContent.toLowerCase();
 
             if (
                 id.includes(valor) ||
                 texto.includes(valor)
             ) {
 
-                trem.style.display = "";
+                sensor.style.display = "";
 
             } else {
 
-                trem.style.display = "none";
+                sensor.style.display = "none";
 
             }
 

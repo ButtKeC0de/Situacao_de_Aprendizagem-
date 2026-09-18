@@ -4,7 +4,7 @@ session_start();
 
 require_once "../infra/conexao.php";
 
-$sql = "SELECT * FROM Sensor ORDER BY id_sensor DESC";
+$sql = "SELECT * FROM trem ORDER BY id_trem DESC";
 $resultado = $conexao->query($sql);
 
 ?>
@@ -16,7 +16,7 @@ $resultado = $conexao->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sensores Cadastrados</title>
+    <title>Trens Cadastrados</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -93,7 +93,7 @@ $resultado = $conexao->query($sql);
         <div class="topo">
 
             <h1 class="titulo_home">
-                Sensores cadastrados
+                Trens cadastrados
             </h1>
 
             <div class="usuario">
@@ -117,7 +117,7 @@ $resultado = $conexao->query($sql);
             <input
                 id="pesquisa"
                 type="search"
-                placeholder="ID do sensor"
+                placeholder="ID:92462"
                 autocomplete="off"
             >
 
@@ -135,25 +135,25 @@ $resultado = $conexao->query($sql);
 
             <?php if ($resultado && $resultado->num_rows > 0): ?>
 
-                <?php while ($sensor = $resultado->fetch_assoc()): ?>
+                <?php while ($trem = $resultado->fetch_assoc()): ?>
 
                     <div
-                        class="trem sensor"
-                        data-id="<?= (int)$sensor['id_sensor'] ?>"
+                        class="trem"
+                        data-id="<?= (int)$trem['id_trem'] ?>"
                     >
 
                         <img
-                            src="../Assets/logos/icon_sensores.png"
-                            alt="Sensor"
+                            src="../Assets/logos/Logo.png"
+                            alt="Imagem do trem"
                         >
 
                         <p>
-                            ID:<?= (int)$sensor['id_sensor'] ?>
+                            ID:<?= (int)$trem['id_trem'] ?>
                         </p>
 
                         <p>
                             <?= htmlspecialchars(
-                                $sensor['localizacao'],
+                                $trem['apelido'],
                                 ENT_QUOTES,
                                 'UTF-8'
                             ) ?>
@@ -165,8 +165,13 @@ $resultado = $conexao->query($sql);
 
             <?php else: ?>
 
-                <p style="grid-column: 1 / -1; text-align: center;">
-                    Nenhum sensor cadastrado.
+                <p
+                    style="
+                        grid-column: 1 / -1;
+                        text-align: center;
+                    "
+                >
+                    Nenhum trem cadastrado.
                 </p>
 
             <?php endif; ?>
@@ -178,10 +183,13 @@ $resultado = $conexao->query($sql);
             <div class="card_acao">
 
                 <h2>
-                    Cadastrar sensor
+                    Cadastrar trem
                 </h2>
 
-                <form action="sensor_cadastro.php" method="get">
+                <form
+                    action="trens_cadastro.php"
+                    method="get"
+                >
 
                     <button
                         type="submit"
@@ -197,10 +205,13 @@ $resultado = $conexao->query($sql);
             <div class="card_acao">
 
                 <h2>
-                    Editar sensor
+                    Editar trem
                 </h2>
 
-                <form action="sensor_editar.php" method="get">
+                <form
+                    action="trens_editar.php"
+                    method="get"
+                >
 
                     <button
                         type="submit"
@@ -216,10 +227,13 @@ $resultado = $conexao->query($sql);
             <div class="card_acao">
 
                 <h2>
-                    Excluir sensor
+                    Excluir trem
                 </h2>
 
-                <form action="sensor_excluir.php" method="get">
+                <form
+                    action="trens_excluir.php"
+                    method="get"
+                >
 
                     <button
                         type="submit"
@@ -236,7 +250,7 @@ $resultado = $conexao->query($sql);
 
                 <iframe
                     src="https://www.openstreetmap.org/export/embed.html?bbox=-49.42%2C-25.62%2C-49.16%2C-25.36&layer=mapnik"
-                    title="Mapa"
+                    title="Mapa das rotas"
                 ></iframe>
 
             </div>
@@ -247,7 +261,7 @@ $resultado = $conexao->query($sql);
 
 </div>
 
-<script src="../scripts/sensor_home.js?v=1"></script>
+<script src="../scripts/home.js?v=3"></script>
 
 </body>
 

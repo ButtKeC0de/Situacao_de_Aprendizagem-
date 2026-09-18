@@ -10,6 +10,7 @@ html, body {
     overflow: hidden;
 }
 
+/* Força o vídeo a ocupar 100% da largura e altura da tela sem bordas */
 .video_inicial {
     position: fixed;
     top: 0;
@@ -20,6 +21,7 @@ html, body {
     z-index: -1;
 }
 
+/* Restante do CSS dos Termos de Uso */
 .container_termos {
     width: 600px;
     height: 850px;

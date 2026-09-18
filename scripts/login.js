@@ -21,7 +21,7 @@ document.getElementById('formLogin').addEventListener('submit', function(event) 
 
     if (usuarioValido) {
         alert("Bem-vindo de volta! Login realizado com sucesso.");
-        window.location.href = "../public/home.html";
+        window.location.href = "../public/home.php";
     } else {
         alert("Email ou senha incorretos. Verifique os dados ou cadastre-se.");
     }

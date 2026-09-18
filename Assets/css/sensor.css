@@ -1,5 +1,5 @@
-* 
-{
+/* Estilos Globais / Layout Base */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -27,6 +27,8 @@ main {
     width: 100%;
 }
 
+
+/* Página inicial / Menu de navegação dos sensores*/
 .barra {
     justify-content: flex-start;
 }
@@ -62,6 +64,9 @@ main {
     margin: 0 auto;
 }
 
+
+/* Painel principal de formulários e listagem*/
+
 .painel-cadastro {
     background-color: rgb(248, 161, 61);
     border-radius: 25px;
@@ -79,6 +84,8 @@ main {
     color: #000000;
 }
 
+
+/* Detalhes dos Sensores */
 .card-sensor {
     background-color: #2b303a;
     color: #ffffff;
@@ -94,6 +101,23 @@ main {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 }
 
+/* Rótulos e valores exibidos dentro dos cards */
+.label-campo {
+    color: #f8a13d;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.valor-campo {
+    font-size: 1rem;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+
+/* Barras de status do sensor*/
 .badge-status {
     font-size: 0.85rem;
     padding: 6px 12px;
@@ -116,20 +140,8 @@ main {
     color: #000;
 }
 
-.label-campo {
-    color: #f8a13d;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 2px;
-}
 
-.valor-campo {
-    font-size: 1rem;
-    font-weight: 400;
-    word-break: break-word;
-}
-
+/* Campo de busca e filtros*/
 .input-busca {
     background-color: #2b303a;
     border: 1px solid #f8a13d;

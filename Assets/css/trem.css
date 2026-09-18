@@ -1,5 +1,5 @@
-* 
-{
+/* Estilos Globais / Layout Base */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -21,6 +21,18 @@ body {
     overflow: hidden;
 }
 
+.content {
+    margin-left: 120px; 
+    width: calc(100vw - 120px); 
+    height: 100vh;
+    padding: 30px;
+    background: #dfe3e8;
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+}
+
+/* Barra Lateral / Navegação */
 .principal {
     position: fixed;
     top: 0;
@@ -36,17 +48,6 @@ body {
     z-index: 1000;
 }
 
-.content {
-    margin-left: 120px; 
-    width: calc(100vw - 120px); 
-    height: 100vh;
-    padding: 30px;
-    background: #dfe3e8;
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
-}
-
 .logos {
     width: 60px;
     height: 60px;
@@ -59,6 +60,7 @@ body {
     margin-bottom: 20px;
 }
 
+/* Tela de Cadastro / Edição de trens */
 .painel-cadastro {
     background: #F2A03A;
     border-radius: 35px;
@@ -121,4 +123,4 @@ body {
 
 .btn-enviar:hover {
     transform: scale(1.03);
-}     
+}

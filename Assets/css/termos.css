@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.video_inicial {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover !important;
+    z-index: -1;
+}
+
+.container_termos {
+    width: 600px;
+    height: 850px;
+    background-color: rgba(255, 153, 0, 0.9);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo_termos {
+    display: block;
+    width: 130px;
+    height: 130px;
+    margin-bottom: 10px;
+}
+
+.Titulo_termos {
+    font-size: 32px;
+    color: #000;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitulo_termos {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.conteudo-termos {
+    width: 550px;
+    height: 460px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-y: auto;
+    color: #000;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.conteudo-termos h5 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.conteudo-termos h5:first-child {
+    margin-top: 0;
+}
+
+.conteudo-termos p {
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.conteudo-termos::-webkit-scrollbar {
+    width: 8px;
+}
+
+.conteudo-termos::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.conteudo-termos::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}
+
+.botao_termos {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#btnAceitar {
+    width: 250px;
+    height: 50px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    font-size: 28px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #000;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#btnAceitar:hover {
+    transform: scale(1.03);
+    background-color: #f0f0f0;
+}

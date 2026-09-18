@@ -10,7 +10,6 @@ html, body {
     overflow: hidden;
 }
 
-/* Vídeo em tela cheia sem bordas/barras brancas */
 .video_inicial {
     position: fixed;
     top: 0;
@@ -21,7 +20,6 @@ html, body {
     z-index: -1;
 }
 
-/* Container ajustado proporcionalmente para caber os 3 campos de 70px */
 .container_login_2 {
     width: 600px;
     height: 850px;
@@ -35,7 +33,6 @@ html, body {
     box-sizing: border-box;
 }
 
-/* Logo com os mesmos tamanhos e margens da tela de login */
 .logo_login {
     display: block;
     margin: auto;
@@ -48,14 +45,12 @@ html, body {
     display: flex;
 }
 
-/* Rótulos com o mesmo tamanho da tela de login (32px) */
 .label_login {
     font-size: 32px;
     margin-left: 20px;
     color: #000;
 }
 
-/* Inputs idênticos aos da tela de login (550px de largura e 70px de altura) */
 .form_text {
     width: 550px;
     height: 70px;
@@ -69,7 +64,6 @@ html, body {
     box-sizing: border-box;
 }
 
-/* Estilização dos links e checkboxes mantendo o padrão */
 .login_1:has(#termos) {
     justify-content: flex-start;
     margin-left: 20px;
@@ -107,7 +101,6 @@ html, body {
     color: inherit;
 }
 
-/* Botão com a mesma estilização da tela de login */
 #button_login {
     width: 250px;
     height: 50px;

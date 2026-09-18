@@ -28,8 +28,6 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 20px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-
 }
 
 .login {
@@ -39,8 +37,6 @@ body {
     content-align: center;
     font-size: 60px;
     margin-top: 50px;
-
-
 }
 
 #form {
@@ -111,7 +107,6 @@ body {
     margin: 10px;
     align-items: center;
     margin-top: 10px;
-
 }
 
 .container_termos {

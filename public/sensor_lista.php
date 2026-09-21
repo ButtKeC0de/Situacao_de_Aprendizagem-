@@ -70,7 +70,7 @@ if ($resultado) {
                     </div>
 
                     <div> 
-                        <a href="../public/sensor_home.phps">
+                        <a href="../public/sensor_home.php">
                             <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
                         </a>
                     </div>
@@ -115,34 +115,50 @@ if ($resultado) {
                                 ?>
                                 <div class="col-md-6 col-lg-4 item-sensor">
                                     <div class="card-sensor">
-                                        <div class="d-flex justify-content-between align-items-start mb-3">
-                                            <span class="badge badge-status <?= $statusClass ?>">
-                                                <?= htmlspecialchars($sensor['status_sensor']) ?>
-                                            </span>
-                                            <small class="text-muted">ID: #<?= $sensor['id_sensor'] ?></small>
+                                        
+                                        <!-- Topo do card com Status + Botões de Editar/Excluir -->
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="badge badge-status <?= $statusClass ?>">
+                                                    <?= htmlspecialchars($sensor['status_sensor']) ?>
+                                                </span>
+
+                                                <!-- Botão Editar -->
+                                                <a href="sensor_editar.php?id=<?= $sensor['id_sensor'] ?>" class="btn btn-sm btn-warning text-dark fw-bold rounded-pill px-2 py-0" style="font-size: 0.75rem;" title="Editar">
+                                                    Editar
+                                                </a>
+
+                                                <!-- Botão Excluir -->
+                                                <a href="sensor_excluir.php?id=<?= $sensor['id_sensor'] ?>" class="btn btn-sm btn-danger text-white fw-bold rounded-pill px-2 py-0" style="font-size: 0.75rem;" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir este sensor?');">
+                                                    Excluir
+                                                </a>
+                                            </div>
+
+                                            <small class="text-muted">#<?= $sensor['id_sensor'] ?></small>
                                         </div>
 
                                         <div class="mb-2">
-                                            <div class="label-campo">Tipo do Sensor</div>
+                                            <div class="label-campo">TIPO DO SENSOR</div>
                                             <div class="valor-campo fw-bold"><?= htmlspecialchars($sensor['tipo_sensor']) ?></div>
                                         </div>
 
                                         <div class="mb-2">
-                                            <div class="label-campo">Localização</div>
+                                            <div class="label-campo">LOCALIZAÇÃO</div>
                                             <div class="valor-campo"><?= htmlspecialchars($sensor['localizacao']) ?></div>
                                         </div>
 
                                         <div class="mb-2">
-                                            <div class="label-campo">Empresa Operadora</div>
+                                            <div class="label-campo">EMPRESA OPERADORA</div>
                                             <div class="valor-campo"><?= htmlspecialchars($sensor['empresa_operadora']) ?></div>
                                         </div>
 
                                         <div class="mb-0">
-                                            <div class="label-campo">Trem Vinculado</div>
+                                            <div class="label-campo">TREM VINCULADO</div>
                                             <div class="valor-campo text-warning">
                                                 <?= !empty($sensor['nome_trem']) ? htmlspecialchars($sensor['nome_trem']) . ' (' . htmlspecialchars($sensor['modelo_trem']) . ')' : 'Não informado' ?>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             <?php endforeach; ?>

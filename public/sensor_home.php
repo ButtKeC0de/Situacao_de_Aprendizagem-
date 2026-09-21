@@ -33,55 +33,21 @@ $resultado = $conexao->query($sql);
         <div>
 
             <div>
-                <img
-                    class="logos"
-                    src="../Assets/logos/Logo.png"
-                    alt="Logo"
-                >
-            </div>
+                <img class="logos"src="../Assets/logos/Logo.png"alt="Logo"> </div>
 
             <div id="logos_barra_lateral">
-
                 <div>
-                    <a href="../public/criação_rotas.html">
-                        <img
-                            class="logos"
-                            src="../Assets/logos/icon_rotas.png"
-                            alt="Rotas"
-                        >
-                    </a>
+                    <a href="../public/criacao_rotas.html"><img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas"> </a>
                 </div>
-
                 <div>
-                    <a href="../public/home.php">
-                        <img
-                            class="logos"
-                            src="../Assets/logos/icon_trem.png"
-                            alt="Trens"
-                        >
-                    </a>
+                    <a href="../public/home.php"><img class="logos"src="../Assets/logos/icon_trem.png" alt="Trens" ></a>
                 </div>
-
                 <div>
-                    <a href="../public/sensor_home.php">
-                        <img
-                            class="logos"
-                            src="../Assets/logos/icon_sensores.png"
-                            alt="Sensores"
-                        >
-                    </a>
+                    <a href="../public/sensor_home.php"><img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores"></a>
                 </div>
-
                 <div>
-                    <a href="../index.html">
-                        <img
-                            class="logos"
-                            src="../Assets/logos/icon_saida.png"
-                            alt="Sair"
-                        >
-                    </a>
+                    <a href="../index.html"><img class="logos"src="../Assets/logos/icon_saida.png" alt="Sair"></a>
                 </div>
-
             </div>
 
         </div>
@@ -92,9 +58,7 @@ $resultado = $conexao->query($sql);
 
         <div class="topo">
 
-            <h1 class="titulo_home">
-                Sensores cadastrados
-            </h1>
+            <h1 class="titulo_home"> Sensores cadastrados </h1>
 
             <div class="usuario">
 
@@ -102,25 +66,15 @@ $resultado = $conexao->query($sql);
                     <i class="bi bi-person-fill"></i>
                 </div>
 
-                <span class="nome_usuario">
-                    admin_007
-                </span>
+                <span class="nome_usuario">admin_007</span>
 
             </div>
 
         </div>
 
         <div class="busca">
-
             <i class="bi bi-search"></i>
-
-            <input
-                id="pesquisa"
-                type="search"
-                placeholder="ID do sensor"
-                autocomplete="off"
-            >
-
+            <input id="pesquisa"type="search"placeholder="ID do sensor"autocomplete="off">
         </div>
 
         <?php if (isset($_SESSION['mensagem'])): ?>
@@ -137,27 +91,11 @@ $resultado = $conexao->query($sql);
 
                 <?php while ($sensor = $resultado->fetch_assoc()): ?>
 
-                    <div
-                        class="trem sensor"
-                        data-id="<?= (int)$sensor['id_sensor'] ?>"
-                    >
+                    <div class="trem sensor" data-id="<?= (int)$sensor['id_sensor'] ?>" >
 
-                        <img
-                            src="../Assets/logos/icon_sensores.png"
-                            alt="Sensor"
-                        >
-
-                        <p>
-                            ID:<?= (int)$sensor['id_sensor'] ?>
-                        </p>
-
-                        <p>
-                            <?= htmlspecialchars(
-                                $sensor['localizacao'],
-                                ENT_QUOTES,
-                                'UTF-8'
-                            ) ?>
-                        </p>
+                        <img src="../Assets/logos/icon_sensores.png"alt="Sensor" >
+                        <p>ID:<?= (int)$sensor['id_sensor'] ?></p>
+                        <p> <?= htmlspecialchars($sensor['localizacao'],ENT_QUOTES, 'UTF-8' ) ?></p>
 
                     </div>
 
@@ -165,9 +103,7 @@ $resultado = $conexao->query($sql);
 
             <?php else: ?>
 
-                <p style="grid-column: 1 / -1; text-align: center;">
-                    Nenhum sensor cadastrado.
-                </p>
+                <p style="grid-column: 1 / -1; text-align: center;"> Nenhum sensor cadastrado. </p>
 
             <?php endif; ?>
 
@@ -182,14 +118,7 @@ $resultado = $conexao->query($sql);
                 </h2>
 
                 <form action="sensor_cadastro.php" method="get">
-
-                    <button
-                        type="submit"
-                        class="botao_laranja"
-                    >
-                        Cadastrar
-                    </button>
-
+                    <button type="submit" class="botao_laranja"> Cadastrar</button>
                 </form>
 
             </div>
@@ -201,14 +130,7 @@ $resultado = $conexao->query($sql);
                 </h2>
 
                 <form action="sensor_editar.php" method="get">
-
-                    <button
-                        type="submit"
-                        class="botao_laranja"
-                    >
-                        Editar
-                    </button>
-
+                    <button type="submit"class="botao_laranja"> Editar</button>
                 </form>
 
             </div>
@@ -220,24 +142,14 @@ $resultado = $conexao->query($sql);
                 </h2>
 
                 <form action="sensor_excluir.php" method="get">
-
-                    <button
-                        type="submit"
-                        class="botao_laranja"
-                    >
-                        Excluir
-                    </button>
-
+                    <button type="submit" class="botao_laranja">Excluir </button>
                 </form>
 
             </div>
 
             <div class="card_mapa">
 
-                <iframe
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=-49.42%2C-25.62%2C-49.16%2C-25.36&layer=mapnik"
-                    title="Mapa"
-                ></iframe>
+                <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-49.42%2C-25.62%2C-49.16%2C-25.36&layer=mapnik" title="Mapa"></iframe>
 
             </div>
 

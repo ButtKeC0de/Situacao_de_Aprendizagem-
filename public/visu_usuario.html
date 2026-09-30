@@ -1,3 +1,25 @@
+Visualização dos usuários
+A equipe deverá criar ou ajustar a tela responsável pela listagem dos usuários cadastrados.
+
+A funcionalidade deverá:
+
+Buscar os usuários armazenados no banco de dados;
+
+Exibir os registros de forma organizada;
+
+Apresentar somente as informações que precisam ser visualizadas;
+
+Evitar a exposição de dados sensíveis ou desnecessários;
+
+Permitir identificar corretamente cada usuário;
+
+Integrar frontend, backend e banco de dados;
+
+Tratar possíveis erros durante a consulta.
+
+A equipe deverá analisar quais dados realmente precisam aparecer na listagem. Informações sensíveis, como senhas ou outros dados que não sejam necessários para a visualização, não deverão ser exibidas.
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,27 +29,21 @@
 </head>
 <body>
 
-    <table>
-        <tr>
-            <td>Nome</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>E-mail</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Telefone</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Tipo de Usúrio</td>
-            <td></td>
-        </tr>
+   table class="user-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Data de Cadastro</th>
+            </tr>
+        </thead>
+        <tbody id="user-list">
+        
+        </tbody>
     </table>
+
+    <script src="/scripts/usuario.js"></script>
     
             
             

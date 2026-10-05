@@ -1,12 +1,17 @@
 CREATE DATABASE IF NOT EXISTS rail_view_db;
 USE rail_view_db;
 
-CREATE TABLE Perfil (
+CREATE TABLE IF NOT EXISTS Perfil (
     id_perfil INT AUTO_INCREMENT PRIMARY KEY,
     nome_perfil VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE Usuario (
+INSERT INTO Perfil (id_perfil, nome_perfil) VALUES 
+(1, 'Administrador'),
+(2, 'Funcionario')
+ON DUPLICATE KEY UPDATE nome_perfil=VALUES(nome_perfil);
+
+CREATE TABLE IF NOT EXISTS Usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -15,9 +20,11 @@ CREATE TABLE Usuario (
 
     FOREIGN KEY (id_perfil)
     REFERENCES Perfil(id_perfil)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
 );
 
-CREATE TABLE Trem (
+CREATE TABLE IF NOT EXISTS Trem (
     id_trem INT AUTO_INCREMENT PRIMARY KEY,
     apelido VARCHAR(100) NOT NULL,
     tipo_trem VARCHAR(50) NOT NULL,
@@ -26,7 +33,7 @@ CREATE TABLE Trem (
     numero_vagoes INT NOT NULL
 );
 
-CREATE TABLE Sensor (
+CREATE TABLE IF NOT EXISTS Sensor (
     id_sensor INT AUTO_INCREMENT PRIMARY KEY,
     tipo_sensor VARCHAR(50) NOT NULL,
     localizacao VARCHAR(100) NOT NULL,
@@ -36,9 +43,11 @@ CREATE TABLE Sensor (
 
     FOREIGN KEY (id_trem)
     REFERENCES Trem(id_trem)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
-CREATE TABLE Rota (
+CREATE TABLE IF NOT EXISTS Rota (
     id_rota INT AUTO_INCREMENT PRIMARY KEY,
     nome_rota VARCHAR(150) NOT NULL,
     origem VARCHAR(150) NOT NULL,
@@ -50,7 +59,7 @@ CREATE TABLE Rota (
     relatorio TEXT
 );
 
-CREATE TABLE Historico_Rota (
+CREATE TABLE IF NOT EXISTS Historico_Rota (
     id_historico INT AUTO_INCREMENT PRIMARY KEY,
     data_inicio DATETIME NOT NULL,
     data_fim DATETIME,
@@ -58,13 +67,17 @@ CREATE TABLE Historico_Rota (
     id_rota INT NOT NULL,
 
     FOREIGN KEY (id_trem)
-    REFERENCES Trem(id_trem),
+    REFERENCES Trem(id_trem)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
 
     FOREIGN KEY (id_rota)
     REFERENCES Rota(id_rota)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
-CREATE TABLE Alerta (
+CREATE TABLE IF NOT EXISTS Alerta (
     id_alerta INT AUTO_INCREMENT PRIMARY KEY,
     mensagem VARCHAR(255) NOT NULL,
     data_alerta DATETIME NOT NULL,
@@ -73,9 +86,11 @@ CREATE TABLE Alerta (
 
     FOREIGN KEY (id_sensor)
     REFERENCES Sensor(id_sensor)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
-CREATE TABLE Manutencao (
+CREATE TABLE IF NOT EXISTS Manutencao (
     id_manutencao INT AUTO_INCREMENT PRIMARY KEY,
     data_inicio DATE NOT NULL,
     data_fim DATE,
@@ -84,4 +99,6 @@ CREATE TABLE Manutencao (
 
     FOREIGN KEY (id_trem)
     REFERENCES Trem(id_trem)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );

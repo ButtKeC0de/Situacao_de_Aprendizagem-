@@ -20,7 +20,8 @@ Todas essas informações são enviadas para um banco de dados central, permitin
 O projeto busca seguir boas práticas de programação, integração de sistemas e gestão de dados.
 
 ## Tecnologias Utilizadas até o momento:
-
+- PHP
+- SQL
 - HTML
 - CSS
 - JavaScript

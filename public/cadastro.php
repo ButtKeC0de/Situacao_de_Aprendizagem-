@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -42,7 +45,7 @@
 
                 <div id="form">
 
-                    <form id="formCadastro">
+                    <form id="formCadastro" method="POST">
 
                         <label class="label_login" for="emailCadastro">
                             Email
@@ -54,6 +57,7 @@
                             id="emailCadastro"
                             placeholder="Digite seu email"
                             required
+                            name="email"
                         >
 
                         <br>
@@ -68,6 +72,7 @@
                             id="senhaCadastro"
                             placeholder="Digite sua senha"
                             required
+                            name="senha"
                         >
 
                         <br>
@@ -82,6 +87,7 @@
                             id="confirmaSenha"
                             placeholder="Confirme sua senha"
                             required
+                            name="confirmaSenha"
                         >
 
                         <br>

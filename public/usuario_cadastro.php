@@ -120,7 +120,7 @@
                         <div class="login_1">
 
                             <a
-                                href="../public/login.html"
+                                href="../public/login.php"
                                 id="text_log"
                                 style="
                                     text-decoration: none;

@@ -1,4 +1,52 @@
 <?php
+require_once '../infra/conexao.php';
+session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+    $confirmaSenha = $_POST['confirmaSenha'];
+
+    if ($senha !== $confirmaSenha) {
+        echo "<script>alert('As senhas não coincidem.');</script>";
+    } else {
+        $stmt = $conexao->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows > 0) {
+            echo "<script>alert('Este email já está cadastrado.');</script>";
+        } else {
+
+             $dominio = substr(strrchr($email, "@"), 1);
+
+            if ($email === 'admin@railview.com') { 
+                
+                $nivel_acesso = 'admin';
+            } elseif ($dominio === 'railview.com' || $dominio === 'funcionario.com') { 
+              
+                $nivel_acesso = 'funcionario';
+            } else {
+               
+                $nivel_acesso = 'usuario';
+            }
+
+            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+            $stmt = $conexao->prepare("INSERT INTO usuarios (email, senha, nivel_acesso) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $email, $senhaHash, $nivel_acesso);
+
+            if ($stmt->execute()) {
+                $_SESSION['usuario_id'] = $conexao->insert_id;
+                $_SESSION['nivel_acesso'] = $nivel_acesso;
+                header("Location: ../public/login.php");
+                exit();
+            } else {
+                echo "<script>alert('Erro ao cadastrar usuário.');</script>";
+            }
+        }
+    }
+}
+
 
 ?>
 

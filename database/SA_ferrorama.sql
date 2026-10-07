@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS Perfil (
 
 INSERT INTO Perfil (id_perfil, nome_perfil) VALUES 
 (1, 'Administrador'),
-(2, 'Funcionario')
+(2, 'Funcionario'),
+(3, 'Usuario')
 ON DUPLICATE KEY UPDATE nome_perfil=VALUES(nome_perfil);
 
 CREATE TABLE IF NOT EXISTS Usuario (

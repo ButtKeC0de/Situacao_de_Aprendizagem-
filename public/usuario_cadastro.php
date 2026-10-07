@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
              $dominio = substr(strrchr($email, "@"), 1);
 
-            if ($email === 'admin@railview.com') { 
+            if ($email === '@admin.com') { 
                 
                 $nivel_acesso = 'admin';
             } elseif ($dominio === 'railview.com' || $dominio === 'funcionario.com') { 

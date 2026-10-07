@@ -40,7 +40,7 @@
                     class="logo_login"
                 >
 
-                <div id="form">
+                <div id="form" method="POST">
 
                     <form id="formLogin">
 
@@ -54,6 +54,7 @@
                             id="email"
                             placeholder="Email"
                             required
+                            name="email"
                         >
 
                         <br>
@@ -68,6 +69,7 @@
                             id="senha"
                             placeholder="Senha"
                             required
+                            name="senha"
                         >
 
                         <br>

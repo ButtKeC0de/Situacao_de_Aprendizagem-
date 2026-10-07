@@ -199,3 +199,145 @@ body {
   height: 100%;
   border: none;
 }
+.dashboard {
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+.dashboard-menu {
+    width: 920px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+
+    background: rgba(255, 255, 255, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 24px;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 20px 60px rgba(28, 38, 45, 0.08);
+}
+
+.opcao {
+    position: relative;
+
+    height: 165px;
+    padding: 28px 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 26px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid rgba(31, 42, 49, 0.10);
+    border-radius: 18px;
+
+    color: #202a31;
+    text-decoration: none;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.opcao img {
+    width: 82px;
+    height: 82px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+
+    filter: drop-shadow(
+        0 6px 8px rgba(0, 0, 0, 0.08)
+    );
+}
+
+.opcao span {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    color: #222d34;
+}
+
+.opcao::after {
+    content: "›";
+
+    position: absolute;
+    right: 30px;
+
+    font-size: 34px;
+    font-weight: 300;
+
+    color: #a4abb0;
+
+    transition: 0.2s ease;
+}
+
+.opcao:hover {
+    transform: translateY(-4px);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 14px 32px rgba(23, 31, 37, 0.11);
+
+    color: #202a31;
+}
+
+.opcao:hover::after {
+    transform: translateX(4px);
+    color: #f5a238;
+}
+
+.opcao:active {
+    transform: translateY(-1px);
+}
+
+@media (max-width: 1050px) {
+
+    .dashboard-menu {
+        width: 85%;
+    }
+
+}
+
+@media (max-width: 750px) {
+
+    .dashboard {
+        padding: 30px;
+    }
+
+    .dashboard-menu {
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+
+    .opcao {
+        height: 135px;
+    }
+
+    .opcao img {
+        width: 65px;
+        height: 65px;
+    }
+
+    .opcao span {
+        font-size: 22px;
+    }
+
+}

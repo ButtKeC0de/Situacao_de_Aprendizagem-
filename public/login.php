@@ -77,7 +77,7 @@
                         <div class="login_1">
 
                             <a
-                                href="../public/cadastro.html"
+                                href="../public/usuario_cadastro.php"
                                 id="text_log"
                                 style="
                                     text-decoration: none;

@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['usuario_id'] = $conexao->insert_id;
                 $_SESSION['id_perfil'] = $id_perfil;
 
-                header("Location: ../public/login.php");
+                header("Location: login.php");
                 exit();
             } else {
                 echo "<script>alert('Erro ao cadastrar usuário.');</script>";

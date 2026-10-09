@@ -69,13 +69,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             alert('Cadastro realizado com sucesso!');
 
-            window.location.href = '../public/login.html';
+            window.location.href = 'login.php';
         });
     }
 
     if (textLog) {
         textLog.addEventListener('click', function () {
-            window.location.href = '../public/login.html';
+            window.location.href = 'login.php';
         });
     }
 });

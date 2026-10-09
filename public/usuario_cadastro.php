@@ -1,53 +1,81 @@
 <?php
 require_once '../infra/conexao.php';
 session_start();
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    $confirmaSenha = $_POST['confirmaSenha'];
 
-    if ($senha !== $confirmaSenha) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $nome = trim($_POST['nome'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $senha = $_POST['senha'] ?? '';
+    $confirmaSenha = $_POST['confirmaSenha'] ?? '';
+
+    if ($nome === '' || $email === '' || $senha === '') {
+        echo "<script>alert('Preencha todos os campos.');</script>";
+
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Digite um email válido.');</script>";
+
+    } elseif ($senha !== $confirmaSenha) {
         echo "<script>alert('As senhas não coincidem.');</script>";
+
     } else {
-        $stmt = $conexao->prepare("SELECT * FROM usuarios WHERE email = ?");
+
+        $stmt = $conexao->prepare(
+            "SELECT id_usuario FROM Usuario WHERE email = ?"
+        );
+
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $resultado = $stmt->get_result();
 
         if ($resultado->num_rows > 0) {
+
             echo "<script>alert('Este email já está cadastrado.');</script>";
+
         } else {
 
-             $dominio = substr(strrchr($email, "@"), 1);
+            $dominio = substr(strrchr($email, "@"), 1);
 
-            if ($email === '@admin.com') { 
-                
-                $nivel_acesso = 'admin';
-            } elseif ($dominio === '@railview.com' || $dominio === '@funcionario.com') { 
-              
-                $nivel_acesso = 'funcionario';
+            if ($dominio === 'admin.com') {
+                $id_perfil = 1;
+            } elseif (
+                $dominio === 'railview.com' ||
+                $dominio === 'funcionario.com'
+            ) {
+                $id_perfil = 2;
             } else {
-               
-                $nivel_acesso = 'usuario';
+                $id_perfil = 3;
             }
 
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-            $stmt = $conexao->prepare("INSERT INTO usuarios (email, senha, nivel_acesso) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $email, $senhaHash, $nivel_acesso);
+
+            $stmt = $conexao->prepare(
+                "INSERT INTO Usuario (nome, email, senha, id_perfil)
+                VALUES (?, ?, ?, ?)"
+            );
+
+            $stmt->bind_param(
+                "sssi",
+                $nome,
+                $email,
+                $senhaHash,
+                $id_perfil
+            );
 
             if ($stmt->execute()) {
                 $_SESSION['usuario_id'] = $conexao->insert_id;
-                $_SESSION['nivel_acesso'] = $nivel_acesso;
+                $_SESSION['id_perfil'] = $id_perfil;
+
                 header("Location: ../public/login.php");
                 exit();
             } else {
                 echo "<script>alert('Erro ao cadastrar usuário.');</script>";
             }
         }
+
+        $stmt->close();
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -63,8 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-        crossorigin="anonymous"
-    >
+        crossorigin="anonymous">
 
     <link rel="stylesheet" href="../assets/css/cadastro.css">
 </head>
@@ -89,12 +116,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img
                     src="../assets/logos/logo_sem_fundo.png"
                     alt="Logo"
-                    class="logo_login"
-                >
+                    class="logo_login">
 
                 <div id="form">
 
                     <form id="formCadastro" method="POST">
+
+                        <label class="label_login" for="nomeCadastro">
+                            Nome completo
+                        </label>
+
+                        <input
+                            class="form_text"
+                            type="text"
+                            id="nomeCadastro"
+                            name="nome"
+                            placeholder="Digite seu nome completo"
+                            required>
 
                         <label class="label_login" for="emailCadastro">
                             Email
@@ -106,8 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             id="emailCadastro"
                             placeholder="Digite seu email"
                             required
-                            name="email"
-                        >
+                            name="email">
 
                         <br>
 
@@ -121,8 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             id="senhaCadastro"
                             placeholder="Digite sua senha"
                             required
-                            name="senha"
-                        >
+                            name="senha">
 
                         <br>
 
@@ -136,8 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             id="confirmaSenha"
                             placeholder="Confirme sua senha"
                             required
-                            name="confirmaSenha"
-                        >
+                            name="confirmaSenha">
 
                         <br>
 
@@ -147,9 +182,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 class="checkbox_login"
                                 type="checkbox"
                                 name="termos"
-                                id="termos"     
-                                required
-                            >
+                                id="termos"
+                                required>
 
                             <label for="termos">
                                 Aceito os
@@ -158,8 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <a
                                 href="../public/termo_de_uso.html"
                                 target="_blank"
-                                id="linkTermos"
-                            >
+                                id="linkTermos">
                                 Termos de Uso
                             </a>
 
@@ -176,8 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     display: block;
                                     cursor: pointer;
                                     text-align: center;
-                                "
-                            >
+                                ">
                                 Já possui conta? Voltar para o Login.
                             </a>
 

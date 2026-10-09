@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($email === '@admin.com') { 
                 
                 $nivel_acesso = 'admin';
-            } elseif ($dominio === 'railview.com' || $dominio === 'funcionario.com') { 
+            } elseif ($dominio === '@railview.com' || $dominio === '@funcionario.com') { 
               
                 $nivel_acesso = 'funcionario';
             } else {
@@ -147,8 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 class="checkbox_login"
                                 type="checkbox"
                                 name="termos"
-                                id="termos"
-                                disabled
+                                id="termos"     
                                 required
                             >
 

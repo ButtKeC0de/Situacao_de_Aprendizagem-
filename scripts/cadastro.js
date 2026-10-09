@@ -1,43 +1,81 @@
-document.getElementById('formCadastro').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+    const formCadastro = document.getElementById('formCadastro');
+    const textLog = document.getElementById('text_log');
 
-    const email = document.getElementById('emailCadastro').value.trim();
-    const senha = document.getElementById('senhaCadastro').value;
-    const confirmaSenha = document.getElementById('confirmaSenha').value;
-    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formCadastro) {
+        formCadastro.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-    if (!emailValido.test(email)) {
-        alert("Digite um email válido!");
-        return;
+            if (localStorage.getItem('termosAceitos') !== 'true') {
+                alert('Você precisa aceitar os Termos de Uso antes de se cadastrar.');
+                window.location.href = '../public/termos.html';
+                return;
+            }
+
+            const email = document.getElementById('emailCadastro').value.trim();
+            const senha = document.getElementById('senhaCadastro').value;
+            const confirmaSenha = document.getElementById('confirmaSenha').value;
+
+            const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailValido.test(email)) {
+                alert('Digite um e-mail válido!');
+                return;
+            }
+
+            if (senha.length < 6) {
+                alert('A senha deve ter no mínimo 6 caracteres!');
+                return;
+            }
+
+            if (senha !== confirmaSenha) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            let usuariosCadastrados = [];
+
+            try {
+                usuariosCadastrados = JSON.parse(
+                    localStorage.getItem('usuarios')
+                ) || [];
+
+                if (!Array.isArray(usuariosCadastrados)) {
+                    usuariosCadastrados = [];
+                }
+            } catch (erro) {
+                alert('Não foi possível consultar os usuários cadastrados.');
+                return;
+            }
+
+            const usuarioExiste = usuariosCadastrados.some(function (usuario) {
+                return usuario.email.toLowerCase() === email.toLowerCase();
+            });
+
+            if (usuarioExiste) {
+                alert('Este e-mail já está cadastrado!');
+                return;
+            }
+
+            usuariosCadastrados.push({
+                email: email,
+                senha: senha
+            });
+
+            localStorage.setItem(
+                'usuarios',
+                JSON.stringify(usuariosCadastrados)
+            );
+
+            alert('Cadastro realizado com sucesso!');
+
+            window.location.href = '../public/login.html';
+        });
     }
 
-    if (senha.length < 6) {
-        alert("A senha deve ter no mínimo 6 caracteres!");
-        return;
+    if (textLog) {
+        textLog.addEventListener('click', function () {
+            window.location.href = '../public/login.html';
+        });
     }
-
-    if (senha !== confirmaSenha) {
-        alert("As senhas não coincidem!");
-        return;
-    }
-
-    const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-    const usuarioExiste = usuariosCadastrados.some(usuario => usuario.email === email);
-
-    if (usuarioExiste) {
-        alert("Este email já está cadastrado!");
-        return;
-    }
-
-    usuariosCadastrados.push({ email: email, senha: senha });
-
-    localStorage.setItem('usuarios', JSON.stringify(usuariosCadastrados));
-
-    alert("Cadastro realizado com sucesso!");
-    window.location.href = "../public/login.html";
-});
-
-document.getElementById('text_log').addEventListener('click', function() {
-    window.location.href = "../public/login.html";
 });

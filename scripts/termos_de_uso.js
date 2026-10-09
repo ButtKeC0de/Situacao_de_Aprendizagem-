@@ -1,9 +1,28 @@
-const btnAceitar = document.getElementById('btnAceitar');
+document.addEventListener('DOMContentLoaded', function () {
+    const btnAceitar = document.getElementById('btnAceitar');
 
-btnAceitar.addEventListener('click', function () {
+    if (!btnAceitar) {
+        return;
+    }
 
-    localStorage.setItem('termosAceitos', 'true');
+    btnAceitar.addEventListener('click', function () {
+        localStorage.setItem('termosAceitos', 'true');
 
-    window.close();
+        const paginaAnterior = document.referrer;
 
+        if (paginaAnterior) {
+            try {
+                const urlAnterior = new URL(paginaAnterior);
+
+                if (urlAnterior.origin === window.location.origin) {
+                    window.location.href = urlAnterior.href;
+                    return;
+                }
+            } catch (erro) {
+                console.error('Não foi possível retornar à página anterior.', erro);
+            }
+        }
+
+        window.location.href = '../public/cadastro.html';
+    });
 });

@@ -120,7 +120,7 @@
         crossorigin="anonymous">
     </script>
 
-    <script src="../scripts/login.js"></script>
+    
 
 </body>
 

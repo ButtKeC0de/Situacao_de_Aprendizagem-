@@ -23,6 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        window.location.href = '../public/cadastro.html';
+        window.location.href = '../public/usuario_cadastro.php';
     });
 });

@@ -4,7 +4,7 @@ session_start();
 
 require_once "../infra/conexao.php";
 
-$sql = "SELECT * FROM trem ORDER BY id_trem DESC";
+$sql = "SELECT * FROM Trem ORDER BY id_trem DESC";
 $resultado = $conexao->query($sql);
 
 ?>
@@ -21,7 +21,7 @@ $resultado = $conexao->query($sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Assets/css/home.css">
+    <link rel="stylesheet" href="../Assets/css/painel.css">
 </head>
 
 <body>
@@ -38,16 +38,16 @@ $resultado = $conexao->query($sql);
 
             <div id="logos_barra_lateral">
                 <div>
-                    <a href="../public/criacao_rotas.html"><img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas"></a>
+                    <a href="../public/criacao_rotas.php"><img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas"></a>
                 </div>
                 <div>
-                    <a href="../public/home.php"><img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens"></a>
+                    <a href="../public/trens_home.php"><img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens"></a>
                 </div>
                 <div>
                     <a href="../public/sensor_home.php"><img class="logos"src="../Assets/logos/icon_sensores.png"alt="Sensores"></a>
                 </div>
                 <div>
-                    <a href="../index.html"><img class="logos"src="../Assets/logos/icon_saida.png"alt="Sair"></a>
+                    <a href="../public/logout.php"><img class="logos"src="../Assets/logos/icon_saida.png"alt="Sair"></a>
                 </div>
 
             </div>
@@ -62,10 +62,10 @@ $resultado = $conexao->query($sql);
 
             <h1 class="titulo_home"> Trens cadastrados</h1>
 
-            <div class="usuario">
+            <a class="usuario text-decoration-none" href="Perfil.php" title="Meu perfil">
                 <div class="foto_usuario"><i class="bi bi-person-fill"></i></div>
-                <span class="nome_usuario">admin_007</span>
-            </div>
+                <span class="nome_usuario"><?= htmlspecialchars($_SESSION['usuario_nome'] ?? 'Entrar') ?></span>
+            </a>
 
         </div>
 
@@ -120,7 +120,7 @@ $resultado = $conexao->query($sql);
 
                 <h2> Editar trem </h2>
 
-                <form action="trens_editar.php" method="get" >
+                <form action="trens_lista.php" method="get" >
                     <button type="submit"class="botao_laranja">Editar</button>
                 </form>
 
@@ -130,7 +130,7 @@ $resultado = $conexao->query($sql);
 
                 <h2> Excluir trem</h2>
 
-                <form action="trens_excluir.php"method="get">
+                <form action="trens_lista.php"method="get">
                     <button type="submit"class="botao_laranja"> Excluir</button>
                 </form>
 

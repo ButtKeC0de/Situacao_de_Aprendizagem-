@@ -1,0 +1,137 @@
+<?php
+require_once '../infra/auth.php';
+// RN17 / RN20: só administradores gerenciam os cadastros de usuários
+exigir_admin();
+
+$usuarios = $conexao->query(
+    "SELECT u.id_usuario, u.nome, u.email, u.id_perfil, p.nome_perfil
+     FROM Usuario u
+     JOIN Perfil p ON p.id_perfil = u.id_perfil
+     ORDER BY u.id_perfil, u.nome"
+)->fetch_all(MYSQLI_ASSOC);
+?>
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="../Assets/css/trem.css">
+    <link rel="stylesheet" href="../Assets/css/home.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <aside class="principal">
+            <div>
+                <div>
+                    <img class="logos" src="../Assets/logos/Logo.png" alt="Logo">
+                </div>
+
+                <div id="logos_barra_lateral">
+                    <div>
+                        <a href="../public/criacao_rotas.php">
+                            <img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas">
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="../public/trens_home.php">
+                            <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="../public/sensor_home.php">
+                            <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="../public/logout.php">
+                            <img class="logos" src="../Assets/logos/icon_saida.png" alt="Sair">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+
+            <section class="painel-cadastro">
+
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                    <h1 class="titulo m-0">Usuários</h1>
+                    <a href="Perfil.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
+                        ← Meu perfil
+                    </a>
+                </div>
+
+                <?php
+                if (isset($_SESSION['mensagem'])) {
+                    echo $_SESSION['mensagem'];
+                    unset($_SESSION['mensagem']);
+                }
+                ?>
+
+                <div class="table-responsive rounded-4 shadow-sm">
+                    <table class="table table-hover align-middle m-0 text-center custom-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Perfil</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($usuarios as $usuario): ?>
+                                <?php $ehVoce = (int)$usuario['id_usuario'] === $_SESSION['usuario_id']; ?>
+                                <tr>
+                                    <td class="fw-bold">
+                                        <?= htmlspecialchars($usuario['nome']) ?>
+                                        <?= $ehVoce ? '<span class="text-muted fw-normal">(você)</span>' : '' ?>
+                                    </td>
+                                    <td><?= htmlspecialchars($usuario['email']) ?></td>
+                                    <td>
+                                        <span class="badge bg-secondary">
+                                            <?= htmlspecialchars($usuario['nome_perfil']) ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="usuario_editar.php?id=<?= (int)$usuario['id_usuario'] ?>" class="btn btn-warning btn-sm text-white me-1 rounded-3" title="Editar">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+
+                                        <!-- Exclusão por POST: um link (GET) poderia ser disparado sem querer, por exemplo ao abrir uma URL -->
+                                        <form action="usuario_excluir.php" method="POST" class="d-inline" onsubmit="return confirm(<?= htmlspecialchars(json_encode('Tem certeza que deseja excluir o usuário ' . $usuario['nome'] . '?')) ?>);">
+                                            <input type="hidden" name="id_usuario" value="<?= (int)$usuario['id_usuario'] ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-3" title="Excluir">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

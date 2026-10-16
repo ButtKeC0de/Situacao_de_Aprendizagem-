@@ -71,8 +71,8 @@ if (isset($stmt)) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    <link rel="stylesheet" href="../assets/css/trem.css">
-    <link rel="stylesheet" href="../assets/css/home.css">
+    <link rel="stylesheet" href="../Assets/css/trem.css">
+    <link rel="stylesheet" href="../Assets/css/home.css">
 </head>
 
 <body>
@@ -87,13 +87,13 @@ if (isset($stmt)) {
 
                 <div id="logos_barra_lateral">
                     <div>
-                        <a href="../public/criação_rotas.html">
+                        <a href="../public/criacao_rotas.php">
                             <img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas">
                         </a>
                     </div>
 
                     <div>
-                        <a href="../public/home.php">
+                        <a href="../public/trens_home.php">
                             <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
                         </a>
                     </div>
@@ -105,7 +105,7 @@ if (isset($stmt)) {
                     </div>
 
                     <div>
-                        <a href="../index.html">
+                        <a href="../public/logout.php">
                             <img class="logos" src="../Assets/logos/icon_saida.png" alt="Sair">
                         </a>
                     </div>

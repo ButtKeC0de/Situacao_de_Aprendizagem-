@@ -229,6 +229,7 @@ a {
 }
 
 .campo input,
+.campo select,
 .pesquisa input {
     width: 100%;
     border: 2px solid transparent;
@@ -238,13 +239,15 @@ a {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.campo input {
+.campo input,
+.campo select {
     height: 46px;
     padding: 0 14px;
     border-radius: 11px;
 }
 
 .campo input:focus,
+.campo select:focus,
 .pesquisa:focus-within {
     border-color: var(--laranja);
     box-shadow: 0 0 0 3px rgba(242, 160, 58, 0.18);
@@ -399,6 +402,41 @@ a {
     outline: none;
     color: var(--branco);
     background: var(--perigo);
+}
+
+.rota-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-editar {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    color: var(--laranja);
+    background: rgba(242, 160, 58, 0.15);
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-editar:hover,
+.btn-editar:focus-visible {
+    outline: none;
+    color: var(--grafite);
+    background: var(--laranja);
+}
+
+.link-cancelar {
+    color: #bdc3d1;
+    font-size: 0.86rem;
+    text-align: center;
+}
+
+a.usuario {
+    color: inherit;
+    text-decoration: none;
 }
 
 .estado-vazio {

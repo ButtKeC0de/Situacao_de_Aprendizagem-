@@ -30,6 +30,7 @@ body {
     display: flex;
     justify-content: center; 
     align-items: center;     
+    overflow-y: auto; /* listas grandes (trens, usuários) podem rolar */
 }
 
 /* Barra Lateral / Navegação */
@@ -65,7 +66,7 @@ body {
     background: #F2A03A;
     border-radius: 35px;
     padding: 40px;
-    margin: 0 auto;
+    margin: auto; /* centraliza quando cabe e começa no topo quando não cabe (rolagem) */
     width: 100%;
     max-width: 1100px; 
 }

@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
         crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../assets/css/cadastro.css">
+    <link rel="stylesheet" href="../Assets/css/cadastro.css">
 </head>
 
 <body>
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <video
                 class="video_inicial"
-                src="../assets/videos/video.login.mp4"
+                src="../Assets/videos/video.login.mp4"
                 autoplay
                 loop
                 muted
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="container_login_2">
 
                 <img
-                    src="../assets/logos/logo_sem_fundo.png"
+                    src="../Assets/logos/logo_sem_fundo.png"
                     alt="Logo"
                     class="logo_login">
 

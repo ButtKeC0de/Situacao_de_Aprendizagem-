@@ -1,9 +1,9 @@
 "use strict";
 
-const CHAVE_ROTAS = "railViewRotas";
+// As rotas agora vêm do banco (criacao_rotas.php). Este script cuida só do que
+// acontece no navegador: pesquisa, contador, validação rápida e confirmação de exclusão.
 
 const formulario = document.getElementById("formRota");
-const inputIdTrem = document.getElementById("idTrem");
 const inputOrigem = document.getElementById("origem");
 const inputDestino = document.getElementById("destino");
 const inputPesquisa = document.getElementById("pesquisarRota");
@@ -12,39 +12,22 @@ const estadoVazio = document.getElementById("estadoVazio");
 const contadorRotas = document.getElementById("contadorRotas");
 const mensagemFormulario = document.getElementById("mensagemFormulario");
 
-let rotas = carregarRotas();
-
-function carregarRotas() {
-    try {
-        const dadosSalvos = localStorage.getItem(CHAVE_ROTAS);
-        const dadosConvertidos = dadosSalvos ? JSON.parse(dadosSalvos) : [];
-
-        return Array.isArray(dadosConvertidos) ? dadosConvertidos : [];
-    } catch (erro) {
-        console.error("Não foi possível carregar as rotas:", erro);
-        return [];
-    }
-}
-
-function salvarRotas() {
-    localStorage.setItem(CHAVE_ROTAS, JSON.stringify(rotas));
-}
+const itensRota = Array.from(listaRotas.querySelectorAll(".rota"));
 
 function normalizarTexto(texto) {
     return texto
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[̀-ͯ]/g, "")
         .toLowerCase()
         .trim();
 }
 
-function escaparHtml(texto) {
-    const elemento = document.createElement("div");
-    elemento.textContent = texto;
-    return elemento.innerHTML;
-}
-
 function mostrarMensagem(texto, tipo = "") {
+    // O perfil "Usuario" não tem formulário, então não há onde mostrar mensagem
+    if (!mensagemFormulario) {
+        return;
+    }
+
     mensagemFormulario.textContent = texto;
     mensagemFormulario.className = `mensagem ${tipo}`.trim();
 
@@ -59,7 +42,7 @@ function mostrarMensagem(texto, tipo = "") {
 }
 
 function atualizarContador(quantidadeExibida) {
-    const total = rotas.length;
+    const total = itensRota.length;
 
     if (total === 0) {
         contadorRotas.textContent = "Nenhuma rota cadastrada";
@@ -74,39 +57,20 @@ function atualizarContador(quantidadeExibida) {
     contadorRotas.textContent = total === 1 ? "1 rota cadastrada" : `${total} rotas cadastradas`;
 }
 
-function criarElementoRota(rota) {
-    const item = document.createElement("article");
-    item.className = "rota";
-    item.dataset.rotaId = rota.id;
-
-    item.innerHTML = `
-        <div class="rota-id">Trem<br>${escaparHtml(rota.idTrem)}</div>
-        <div class="rota-trajeto">
-            <strong>${escaparHtml(rota.origem)} → ${escaparHtml(rota.destino)}</strong>
-            <span>Rota #${escaparHtml(rota.id.slice(-6).toUpperCase())}</span>
-        </div>
-        <button class="btn-excluir" type="button" aria-label="Excluir rota de ${escaparHtml(rota.origem)} para ${escaparHtml(rota.destino)}" title="Excluir rota">
-            <i class="bi bi-trash3-fill" aria-hidden="true"></i>
-        </button>
-    `;
-
-    return item;
-}
-
-function renderizarRotas(filtro = "") {
+function filtrarRotas(filtro = "") {
     const termo = normalizarTexto(filtro);
-    const rotasFiltradas = rotas.filter((rota) => {
-        const dadosDaRota = normalizarTexto(`${rota.idTrem} ${rota.origem} ${rota.destino}`);
-        return dadosDaRota.includes(termo);
+    let quantidadeExibida = 0;
+
+    itensRota.forEach((item) => {
+        const corresponde = normalizarTexto(item.textContent).includes(termo);
+        item.style.display = corresponde ? "" : "none";
+
+        if (corresponde) {
+            quantidadeExibida++;
+        }
     });
 
-    listaRotas.replaceChildren();
-
-    rotasFiltradas.forEach((rota) => {
-        listaRotas.appendChild(criarElementoRota(rota));
-    });
-
-    const semResultados = rotasFiltradas.length === 0;
+    const semResultados = quantidadeExibida === 0;
     estadoVazio.classList.toggle("oculto", !semResultados);
 
     const tituloVazio = estadoVazio.querySelector("h3");
@@ -120,73 +84,35 @@ function renderizarRotas(filtro = "") {
         descricaoVazia.textContent = "As novas rotas aparecerão aqui.";
     }
 
-    atualizarContador(rotasFiltradas.length);
+    atualizarContador(quantidadeExibida);
 }
 
-formulario.addEventListener("submit", (evento) => {
-    evento.preventDefault();
-
-    const idTrem = inputIdTrem.value.trim();
-    const origem = inputOrigem.value.trim();
-    const destino = inputDestino.value.trim();
-
-    if (!idTrem || !origem || !destino) {
-        mostrarMensagem("Preencha todos os campos.", "erro");
-        return;
-    }
-
-    if (normalizarTexto(origem) === normalizarTexto(destino)) {
-        mostrarMensagem("A origem e o destino precisam ser diferentes.", "erro");
-        inputDestino.focus();
-        return;
-    }
-
-    const novaRota = {
-        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        idTrem,
-        origem,
-        destino
-    };
-
-    rotas.unshift(novaRota);
-    salvarRotas();
-    renderizarRotas(inputPesquisa.value);
-
-    formulario.reset();
-    inputIdTrem.focus();
-    mostrarMensagem("Rota cadastrada com sucesso!", "sucesso");
-});
+if (formulario) {
+    // O servidor valida tudo de novo; aqui é só para avisar antes de enviar
+    formulario.addEventListener("submit", (evento) => {
+        if (normalizarTexto(inputOrigem.value) === normalizarTexto(inputDestino.value)) {
+            evento.preventDefault();
+            mostrarMensagem("A origem e o destino precisam ser diferentes.", "erro");
+            inputDestino.focus();
+        }
+    });
+}
 
 inputPesquisa.addEventListener("input", () => {
-    renderizarRotas(inputPesquisa.value);
+    filtrarRotas(inputPesquisa.value);
 });
 
-listaRotas.addEventListener("click", (evento) => {
-    const botaoExcluir = evento.target.closest(".btn-excluir");
+listaRotas.addEventListener("submit", (evento) => {
+    const formExcluir = evento.target.closest(".form-excluir");
 
-    if (!botaoExcluir) {
-        return;
+    if (formExcluir && !window.confirm(`Deseja excluir a rota ${formExcluir.dataset.trajeto}?`)) {
+        evento.preventDefault();
     }
-
-    const itemRota = botaoExcluir.closest(".rota");
-    const rotaSelecionada = rotas.find((rota) => rota.id === itemRota.dataset.rotaId);
-
-    if (!rotaSelecionada) {
-        return;
-    }
-
-    const deveExcluir = window.confirm(
-        `Deseja excluir a rota ${rotaSelecionada.origem} → ${rotaSelecionada.destino}?`
-    );
-
-    if (!deveExcluir) {
-        return;
-    }
-
-    rotas = rotas.filter((rota) => rota.id !== rotaSelecionada.id);
-    salvarRotas();
-    renderizarRotas(inputPesquisa.value);
-    mostrarMensagem("Rota excluída.", "sucesso");
 });
 
-renderizarRotas();
+// Mensagem que veio do servidor (rota salva, excluída ou erro) some depois de alguns segundos
+if (mensagemFormulario && mensagemFormulario.textContent.trim()) {
+    mostrarMensagem(mensagemFormulario.textContent.trim(), mensagemFormulario.classList.contains("erro") ? "erro" : "sucesso");
+}
+
+filtrarRotas();

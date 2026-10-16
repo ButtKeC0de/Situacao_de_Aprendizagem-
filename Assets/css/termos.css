@@ -130,3 +130,19 @@ html, body {
     transform: scale(1.03);
     background-color: #f0f0f0;
 }
+
+/* Em telas mais baixas que o formulário (850px), como notebooks de 768px,
+   ele era cortado em cima e embaixo sem poder rolar a página */
+@media (max-height: 870px) {
+    html, body {
+        overflow: auto;
+    }
+
+    .container_termos {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        margin: 10px auto;
+    }
+}

@@ -160,3 +160,58 @@ main {
 .input-busca::placeholder {
     color: #aaa;
 }
+
+
+/* Formulários de cadastro e edição de sensor (mesmo visual do formulário de trem em trem.css) */
+.card-input {
+    background: #31384A;
+    border-radius: 28px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card-input label {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+.card-input input {
+    width: 90%;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    background: #F2A03A;
+    text-align: center;
+    outline: none;
+}
+
+.botao-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-enviar {
+    width: 240px;
+    height: 130px;
+    border: none;
+    border-radius: 30px;
+    background: #31384A;
+    color: #fff;
+    font-weight: 300;
+    transition: .3s;
+}
+
+.btn-enviar:hover {
+    transform: scale(1.03);
+}
+
+.card-input select {
+    width: 90%;
+}

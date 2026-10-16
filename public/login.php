@@ -1,3 +1,41 @@
+<?php
+require_once '../infra/auth.php';
+
+$erro = '';
+$email = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $senha = $_POST['senha'] ?? '';
+
+    if ($email === '' || $senha === '') {
+        $erro = 'Preencha o email e a senha.';
+    } else {
+        $stmt = $conexao->prepare(
+            "SELECT id_usuario, nome, senha, id_perfil FROM Usuario WHERE email = ?"
+        );
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $usuario = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        // A senha foi salva com password_hash() no cadastro, então é conferida com password_verify().
+        // A mesma mensagem para email inexistente e senha errada não revela quais emails existem.
+        if ($usuario && password_verify($senha, $usuario['senha'])) {
+            session_regenerate_id(true);
+
+            $_SESSION['usuario_id'] = (int)$usuario['id_usuario'];
+            $_SESSION['usuario_nome'] = $usuario['nome'];
+            $_SESSION['id_perfil'] = (int)$usuario['id_perfil'];
+
+            header("Location: home.php");
+            exit();
+        }
+
+        $erro = 'Email ou senha incorretos.';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -14,7 +52,7 @@
         crossorigin="anonymous"
     >
 
-    <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="stylesheet" href="../Assets/css/login.css">
 </head>
 
 <body>
@@ -23,18 +61,17 @@
 
         <div>
 
-            <video class="video_inicial" src="../assets/videos/video.login.mp4" autoplay loop muted playsinline></video>
+            <video class="video_inicial" src="../Assets/videos/video.login.mp4" autoplay loop muted playsinline></video>
 
             <div class="container_login">
-                <img src="../assets/logos/logo_sem_fundo.png" alt="Logo" class="logo_login">
+                <img src="../Assets/logos/logo_sem_fundo.png" alt="Logo" class="logo_login">
 
-                <!-- Adicionado action="../public/home.php" e method="POST" diretamente no form -->
-                <form id="formLogin" action="../public/home.php" method="POST">
+                <form id="formLogin" action="login.php" method="POST">
                     <label class="label_login" for="email">
                         Email
                     </label>
 
-                    <input class="form_text" type="email" id="email" placeholder="Email" required name="email">
+                    <input class="form_text" type="email" id="email" placeholder="Email" required name="email" value="<?= htmlspecialchars($email) ?>">
 
                     <br>
 
@@ -77,6 +114,10 @@
         integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
         crossorigin="anonymous">
     </script>
+
+    <?php if ($erro !== ''): ?>
+        <script>alert(<?= json_encode($erro, JSON_UNESCAPED_UNICODE) ?>);</script>
+    <?php endif; ?>
 
 </body>
 

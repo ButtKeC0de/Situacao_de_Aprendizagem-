@@ -1,158 +1,99 @@
-<?php
-
-session_start();
-
-require_once "../infra/conexao.php";
-
-$sql = "SELECT * FROM trem ORDER BY id_trem DESC";
-$resultado = $conexao->query($sql);
-
-?>
-
 <!doctype html>
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Trens Cadastrados</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Assets/css/home.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rail View</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Assets/css/home.css">
 </head>
 
 <body>
+<header class="navbar">    
+  <nav class="nav-links w-100">
+    <div class="container-fluid d-flex justify-content-between align-items-center px-4">
+      
+      <a class="navbar-brand d-flex align-items-center text-dark fw-bold" href="#">
+        <img src="../Assets/logos/Logo.png" alt="Logo" class="Logo_1 me-2">
+        <span>Quem somos</span>
+      </a>
 
-<div class="tela">
+      <div class="menu-icones d-flex align-items-center gap-3">
+        <a href="../public/criacao_rotas.html"><img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas"></a>
+        <a href="../public/home.php"><img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens"></a>
+        <a href="../public/sensor_home.php"><img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores"></a>
+      </div>
 
-    <div class="principal">
-
-        <div>
-
-            <div>
-                <img class="logos"src="../Assets/logos/Logo.png" alt="Logo">
-            </div>
-
-            <div id="logos_barra_lateral">
-                <div>
-                    <a href="../public/criacao_rotas.html"><img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas"></a>
-                </div>
-                <div>
-                    <a href="../public/home.php"><img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens"></a>
-                </div>
-                <div>
-                    <a href="../public/sensor_home.php"><img class="logos"src="../Assets/logos/icon_sensores.png"alt="Sensores"></a>
-                </div>
-                <div>
-                    <a href="../index.html"><img class="logos"src="../Assets/logos/icon_saida.png"alt="Sair"></a>
-                </div>
-
-            </div>
-
-        </div>
+      <div class="but">
+        <a href="../index.html">
+            <img class="logos" src="../Assets/logos/icon_saida.png" alt="Sair">
+        </a>
+      </div>
 
     </div>
+  </nav>
+</header>
 
-    <div class="conteudo">
-
-        <div class="topo">
-
-            <h1 class="titulo_home"> Trens cadastrados</h1>
-
-            <div class="usuario">
-                <div class="foto_usuario"><i class="bi bi-person-fill"></i></div>
-                <span class="nome_usuario">admin_007</span>
-            </div>
-
-        </div>
-
-        <div class="busca">
-            <i class="bi bi-search"></i>
-            <input id="pesquisa"type="search" placeholder="ID:92462"autocomplete="off">
-        </div>
-
-        <?php if (isset($_SESSION['mensagem'])): ?>
-
-            <?= $_SESSION['mensagem']; ?>
-
-            <?php unset($_SESSION['mensagem']); ?>
-
-        <?php endif; ?>
-
-        <div id="trens">
-
-            <?php if ($resultado && $resultado->num_rows > 0): ?>
-
-                <?php while ($trem = $resultado->fetch_assoc()): ?>
-
-                    <div class="trem"data-id="<?= (int)$trem['id_trem'] ?>">
-                        <img src="../Assets/logos/Logo.png" alt="Imagem do trem" >
-                        <p>ID:<?= (int)$trem['id_trem'] ?></p>
-                        <p><?= htmlspecialchars( $trem['apelido'],ENT_QUOTES,'UTF-8') ?></p>
-                    </div>
-
-                <?php endwhile; ?>
-
-            <?php else: ?>
-
-                <p style="grid-column: 1 / -1;text-align: center;">Nenhum trem cadastrado.</p>
-
-            <?php endif; ?>
-
-        </div>
-
-        <div class="parte_baixo_home">
-
-            <div class="card_acao">
-
-                <h2> Cadastrar trem </h2>
-
-                <form action="trens_cadastro.php"method="get">
-                    <button type="submit" class="botao_laranja" > Cadastrar </button>
-                </form>
-
-            </div>
-
-            <div class="card_acao">
-
-                <h2> Editar trem </h2>
-
-                <form action="trens_editar.php" method="get" >
-                    <button type="submit"class="botao_laranja">Editar</button>
-                </form>
-
-            </div>
-
-            <div class="card_acao">
-
-                <h2> Excluir trem</h2>
-
-                <form action="trens_excluir.php"method="get">
-                    <button type="submit"class="botao_laranja"> Excluir</button>
-                </form>
-
-            </div>
-
-            <div class="card_mapa">
-
-                <iframe
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=-49.42%2C-25.62%2C-49.16%2C-25.36&layer=mapnik"
-                    title="Mapa das rotas"
-                ></iframe>
-
-            </div>
-
-        </div>
-
+  <main>
+    <div class="vid_1">
+      <video id="video_inicial" src="../Assets/videos/trem_telainicial.mp4" autoplay loop muted playsinline></video>
     </div>
 
-</div>
+    <section class="conteudo-cards py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold display-5 text-dark">Quem Somos</h2>
+        
+        <div class="row row-cols-1 row-cols-md-2 g-4 align-items-stretch justify-content-center wrapper-cards" tabindex="0">
+          
+          <div class="col card-anima-item card-esquerda">
+            <div class="card card-custom-laranja border-0 p-4 h-100">
+              <h1 class="mid-btt fw-bold mb-4">Rail View</h1>
+              <div class="card-body p-0">
+                <p class="card-text">
+                  Rail View nasceu com a missão clara e audaciosa de revolucionar e transformar a
+                  gestão ferroviária global. Unimos tecnologia de ponta e inovação para moldar a infraestrutura do
+                  amanhã, desenvolvendo soluções avançadas que integram visão computacional, Internet das Coisas (IoT) e
+                  análise de dados em tempo real.
+                </p>
+                <p class="card-text mt-3">
+                  Nossa marca e nossas tecnologias foram meticulosamente projetadas para responder às demandas mais
+                  complexas de um setor vital, onde margens para erro não existem. Entregamos o que o mercado
+                  ferroviário exige como prioridade absoluta:
+                </p>
+                
+                <div class="card-text-destaque mt-4">
+                  <p><strong>Precisão Cirúrgica:</strong> Monitoramento rigoroso e diagnósticos exatos de ativos e trilhos.</p>
+                  <p><strong>Segurança Inegociável:</strong> Prevenção de falhas e mitigação de riscos para proteger vidas e cargas.</p>
+                  <p><strong>Alta Eficiência Operacional:</strong> Maximização da produtividade, redução de custos e otimização do tempo de atividade.</p>
+                </div>
 
-<script src="../scripts/home.js?v=3"></script>
+                <p class="card-text mt-4">
+                  Na Rail View, transformamos dados complexos em decisões inteligentes e imediatas, garantindo que o
+                  setor ferroviário siga avançando com máxima performance e total confiabilidade.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col card-anima-item card-direita">
+            <div class="card card-custom-laranja border-0 p-4 h-100 d-flex align-items-center justify-content-center">
+              <img src="../Assets/Images/trem-NEVE.jpg" class="img-fluid rounded-4 img-trem-fix" alt="Trem na Neve">
+            </div>
+          </div>
 
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -9,6 +9,9 @@ body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+/* ===================================
+   NAVBAR & ESTILOS DO CABEÇALHO
+   =================================== */
 .navbar {
     background-color: #fca339;
     padding: 12px 0;
@@ -25,30 +28,33 @@ body {
 }
 
 .Logo_1 {
-    height: 50px;
+    height: 60px;
     width: auto;
     object-fit: contain;
 }
 
+/* Container que agrupa os 4 ícones no canto direito */
 .menu-icones {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px; /* Espaçamento entre os ícones */
 }
 
-.logos, 
-.botao_entrar {
-    height: 45px;
+/* Tamanho aumentado para os 4 ícones */
+.logos {
+    height: 65px; /* Aumentado para destacá-los bem na navbar */
     width: auto;
     object-fit: contain;
     transition: transform 0.2s ease;
 }
 
-.logos:hover, 
-.botao_sair:hover {
+.logos:hover {
     transform: scale(1.1);
 }
 
+/* ===================================
+   COMPONENTES DE CONTEÚDO E CARDS
+   =================================== */
 .bg_yelllow {
     background-color: rgb(248, 164, 62);
     border: none;
@@ -110,70 +116,3 @@ video {
     height: 50px;
     border-radius: 30px;
     margin: auto;
-    border: none;
-    outline: none;
-    display: block;
-    font-size: 30px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
-}
-
-.card-custom-laranja {
-    background-color: #fca339 !important; 
-    border-radius: 24px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    padding: 8px;
-    cursor: pointer;
-    transition: background-color 600ms ease, transform 600ms ease;
-}
-
-.card-custom-laranja:is(:hover, :focus) {
-    transform: scale(1.03);
-    background-color: #e58f26 !important;
-    outline: none;
-}
-
-.card-anima-item {
-    opacity: 0;
-    transform: translateX(-60px);
-    transition-property: transform, opacity;
-    transition-duration: 1s; 
-    transition-timing-function: ease;
-}
-
-.wrapper-cards:is(:hover, :focus) .card-anima-item {
-    transform: translateX(0);
-    opacity: 1; 
-}
-
-.wrapper-cards .card-esquerda {
-    transition-delay: 0ms; 
-}
-
-.wrapper-cards .card-direita {
-    transition-delay: 200ms; 
-}
-
-.wrapper-cards:focus {
-    outline: none;
-}
-
-.card-text {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #111111;
-}
-
-.card-text-destaque p {
-    margin-bottom: 12px;
-    font-size: 1rem;
-    color: #111111;
-}
-
-.img-trem-fix {
-    width: 100%;
-    height: 100%;
-    min-height: 400px;
-    object-fit: cover;
-    border-radius: 16px;
-}

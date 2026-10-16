@@ -23,84 +23,42 @@
 
         <div>
 
-            <video
-                class="video_inicial"
-                src="../assets/videos/video.login.mp4"
-                autoplay
-                loop
-                muted
-                playsinline>
-            </video>
+            <video class="video_inicial" src="../assets/videos/video.login.mp4" autoplay loop muted playsinline></video>
 
             <div class="container_login">
+                <img src="../assets/logos/logo_sem_fundo.png" alt="Logo" class="logo_login">
 
-                <img
-                    src="../assets/logos/logo_sem_fundo.png"
-                    alt="Logo"
-                    class="logo_login"
-                >
+                <!-- Adicionado action="../public/home.php" e method="POST" diretamente no form -->
+                <form id="formLogin" action="../public/home.php" method="POST">
+                    <label class="label_login" for="email">
+                        Email
+                    </label>
 
-                <div id="form" method="POST">
+                    <input class="form_text" type="email" id="email" placeholder="Email" required name="email">
 
-                    <form id="formLogin">
+                    <br>
 
-                        <label class="label_login" for="email">
-                            Email
-                        </label>
+                    <label class="label_login" for="senha">
+                        Senha
+                    </label>
 
-                        <input
-                            class="form_text"
-                            type="email"
-                            id="email"
-                            placeholder="Email"
-                            required
-                            name="email"
-                        >
+                    <input class="form_text" type="password" id="senha" placeholder="Senha" required name="senha">
 
-                        <br>
+                    <br>
 
-                        <label class="label_login" for="senha">
-                            Senha
-                        </label>
+                    <div class="login_1">
+                        <a href="../public/usuario_cadastro.php" id="text_log" style="text-decoration: none; color: inherit; display: block; cursor: pointer; text-align: center;">
+                            Não possui conta? Cadastrar-se
+                        </a>
+                    </div>
 
-                        <input
-                            class="form_text"
-                            type="password"
-                            id="senha"
-                            placeholder="Senha"
-                            required
-                            name="senha"
-                        >
+                    <br>
 
-                        <br>
+                    <button id="button_login" type="submit">
+                        Entrar
+                    </button>
 
-                        <div class="login_1">
-
-                            <a
-                                href="../public/usuario_cadastro.php"
-                                id="text_log"
-                                style="
-                                    text-decoration: none;
-                                    color: inherit;
-                                    display: block;
-                                    cursor: pointer;
-                                    text-align: center;
-                                "
-                            >
-                                Não possui conta? Cadastrar-se
-                            </a>
-
-                        </div>
-
-                        <br>
-
-                        <button id="button_login" type="submit">
-                            Entrar
-                        </button>
-
-                    </form>
-
-                </div>
+                </form>
 
             </div>
 
@@ -119,8 +77,6 @@
         integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
         crossorigin="anonymous">
     </script>
-
-    
 
 </body>
 

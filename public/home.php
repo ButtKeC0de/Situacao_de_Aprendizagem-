@@ -26,12 +26,7 @@
         <a href="../public/criacao_rotas.html"><img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas"></a>
         <a href="../public/home.php"><img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens"></a>
         <a href="../public/sensor_home.php"><img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores"></a>
-      </div>
-
-      <div class="but">
-        <a href="../index.html">
-            <img class="logos" src="../Assets/logos/icon_saida.png" alt="Sair">
-        </a>
+        <a href="../index.html"><img class="logos" src="../Assets/logos/icon_saida.png" alt="Sair"></a>
       </div>
 
     </div>

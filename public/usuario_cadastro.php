@@ -243,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         crossorigin="anonymous">
     </script>
 
-    <script src="../scripts/cadastro.js"></script>
+    
 
 </body>
 

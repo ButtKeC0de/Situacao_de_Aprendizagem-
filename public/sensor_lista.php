@@ -90,9 +90,11 @@ if ($resultado) {
 
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                     <h1 class="titulo m-0">Sensores Cadastrados</h1>
+                    <?php if (eh_admin()): ?>
                     <a href="sensor_cadastro.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
                          Cadastrar Sensor
                     </a>
+                    <?php endif; ?>
                 </div>
 
                 <?php if (!empty($mensagem)) echo $mensagem; ?>
@@ -122,6 +124,7 @@ if ($resultado) {
                                                     <?= htmlspecialchars($sensor['status_sensor']) ?>
                                                 </span>
 
+                                                <?php if (eh_admin()): ?>
                                                 <a href="sensor_editar.php?id=<?= $sensor['id_sensor'] ?>" class="btn btn-sm btn-warning text-dark fw-bold rounded-pill px-2 py-0" style="font-size: 0.75rem;" title="Editar">
                                                     Editar
                                                 </a>
@@ -129,6 +132,7 @@ if ($resultado) {
                                                 <a href="sensor_excluir.php?id=<?= $sensor['id_sensor'] ?>" class="btn btn-sm btn-danger text-white fw-bold rounded-pill px-2 py-0" style="font-size: 0.75rem;" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir este sensor?');">
                                                     Excluir
                                                 </a>
+                                                <?php endif; ?>
                                             </div>
 
                                             <small class="text-muted">#<?= $sensor['id_sensor'] ?></small>
@@ -162,8 +166,11 @@ if ($resultado) {
                         </div>
                     <?php else: ?>
                         <div class="alert alert-info text-center rounded-4 py-4" role="alert">
-                            Nenhum sensor cadastrado até o momento. <br>
+                            Nenhum sensor cadastrado até o momento.
+                            <?php if (eh_admin()): ?>
+                            <br>
                             <a href="sensor_cadastro.php" class="alert-link">Clique aqui para cadastrar o primeiro sensor.</a>
+                            <?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>

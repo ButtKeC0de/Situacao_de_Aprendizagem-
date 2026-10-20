@@ -119,9 +119,11 @@ if (isset($stmt)) {
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="titulo m-0">Trens Cadastrados</h1>
+                    <?php if (eh_admin()): ?>
                     <a href="trens_cadastro.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
                         + Cadastrar Novo
                     </a>
+                    <?php endif; ?>
                 </div>
 
                 <?php 
@@ -140,7 +142,7 @@ if (isset($stmt)) {
                                 <th>Operadora</th>
                                 <th>Tipo</th>
                                 <th>Vagões</th>
-                                <th>Ações</th>
+                                <?php if (eh_admin()): ?><th>Ações</th><?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -152,6 +154,7 @@ if (isset($stmt)) {
                                         <td><?= htmlspecialchars($trem['empresa_operadora']) ?></td>
                                         <td><span class="badge bg-secondary"><?= htmlspecialchars($trem['tipo_trem']) ?></span></td>
                                         <td><?= htmlspecialchars($trem['numero_vagoes']) ?></td>
+                                        <?php if (eh_admin()): ?>
                                         <td>
                                             <a href="trens_editar.php?id=<?= $trem['id_trem'] ?>" class="btn btn-warning btn-sm text-white me-1 rounded-3" title="Editar">
                                                 <i class="bi bi-pencil-fill"></i>
@@ -161,11 +164,12 @@ if (isset($stmt)) {
                                                 <i class="bi bi-trash-fill"></i>
                                             </a>
                                         </td>
+                                        <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6" class="text-muted py-4">Nenhum trem cadastrado até o momento.</td>
+                                    <td colspan="<?= eh_admin() ? 6 : 5 ?>" class="text-muted py-4">Nenhum trem cadastrado até o momento.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

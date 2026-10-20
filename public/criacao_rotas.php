@@ -8,6 +8,10 @@ unset($_SESSION['mensagem_rota']);
 
 $rotaForm = ['id_rota' => null, 'id_trem' => '', 'origem' => '', 'destino' => '', 'operadora' => ''];
 
+if (($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_GET['editar'])) && !eh_admin()) {
+    negar_acesso();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (($_POST['acao'] ?? '') === 'excluir') {
         $id_rota = filter_input(INPUT_POST, 'id_rota', FILTER_VALIDATE_INT);
@@ -223,11 +227,17 @@ $editando = !empty($rotaForm['id_rota']);
                             <i class="bi bi-signpost-split-fill"></i>
                         </div>
                         <div>
+                            <?php if (eh_admin()): ?>
                             <h2><?= $editando ? 'Editar Rota #' . (int)$rotaForm['id_rota'] : 'Cadastrar Rota' ?></h2>
                             <p>Informe os dados do <?= $editando ? 'trajeto' : 'novo trajeto' ?>.</p>
+                            <?php else: ?>
+                            <h2>Rotas</h2>
+                            <p>Você pode consultar as rotas. Apenas administradores cadastram, editam e excluem.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
 
+                    <?php if (eh_admin()): ?>
                     <form class="formrota" id="formRota" method="POST" action="criacao_rotas.php" autocomplete="off">
                         <input type="hidden" name="acao" value="salvar">
                         <?php if ($editando): ?>
@@ -272,6 +282,7 @@ $editando = !empty($rotaForm['id_rota']);
                             <a class="link-cancelar" href="criacao_rotas.php">Cancelar edição</a>
                         <?php endif; ?>
                     </form>
+                    <?php endif; ?>
                 </article>
 
                 <article id="trens_2" class="card">
@@ -299,6 +310,7 @@ $editando = !empty($rotaForm['id_rota']);
                                         <?= $rota['apelido'] ? '· ' . htmlspecialchars($rota['apelido']) : '' ?>
                                     </span>
                                 </div>
+                                <?php if (eh_admin()): ?>
                                 <div class="rota-acoes">
                                         <a class="btn-editar" href="criacao_rotas.php?editar=<?= (int)$rota['id_rota'] ?>" title="Editar rota" aria-label="Editar rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>">
                                             <i class="bi bi-pencil-fill" aria-hidden="true"></i>
@@ -311,6 +323,7 @@ $editando = !empty($rotaForm['id_rota']);
                                             </button>
                                         </form>
                                 </div>
+                                <?php endif; ?>
                             </article>
                         <?php endforeach; ?>
                     </div>

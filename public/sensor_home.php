@@ -111,6 +111,8 @@ $resultado = $conexao->query($sql);
 
         <div class="parte_baixo_home">
 
+            <?php if (eh_admin()): ?>
+
             <div class="card_acao">
 
                 <h2>
@@ -146,6 +148,22 @@ $resultado = $conexao->query($sql);
                 </form>
 
             </div>
+
+            <?php else: ?>
+
+            <div class="card_acao">
+
+                <h2>
+                    Consultar sensores
+                </h2>
+
+                <form action="sensor_lista.php" method="get">
+                    <button type="submit" class="botao_laranja"> Ver lista </button>
+                </form>
+
+            </div>
+
+            <?php endif; ?>
 
             <div class="card_mapa">
 

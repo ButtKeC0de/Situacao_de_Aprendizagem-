@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once '../infra/conexao.php';
+require_once '../infra/auth.php';
+exigir_admin();
 
 $mensagem = "";
 $sensor = null;

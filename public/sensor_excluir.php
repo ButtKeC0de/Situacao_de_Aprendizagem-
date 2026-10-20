@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once '../infra/conexao.php';
+require_once '../infra/auth.php';
+exigir_admin();
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id_sensor = intval($_GET['id']);

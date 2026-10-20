@@ -1,7 +1,7 @@
 <?php
-session_start();
+require_once '../infra/auth.php';
+exigir_admin();
 
-require_once '../infra/conexao.php';
 
 $id = $_GET['id'] ?? null;
 

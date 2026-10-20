@@ -1,3 +1,7 @@
+<?php
+require_once '../infra/auth.php';
+exigir_login();
+?>
 <!doctype html>
 <html lang="pt-br">
 

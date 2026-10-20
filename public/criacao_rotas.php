@@ -1,6 +1,6 @@
 <?php
-require_once '../infra/conexao.php';
-session_start();
+require_once '../infra/auth.php';
+exigir_login();
 
 
 $mensagem = $_SESSION['mensagem_rota'] ?? null;

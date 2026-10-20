@@ -1,8 +1,7 @@
 <?php
 
-session_start();
-
-require_once "../infra/conexao.php";
+require_once '../infra/auth.php';
+exigir_login();
 
 $sql = "SELECT * FROM Trem ORDER BY id_trem DESC";
 $resultado = $conexao->query($sql);

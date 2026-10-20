@@ -1,7 +1,7 @@
 <?php
-session_start();
+require_once '../infra/auth.php';
+exigir_login();
 
-require_once '../infra/conexao.php';
 
 $mensagem = "";
 if (isset($_SESSION['mensagem'])) {

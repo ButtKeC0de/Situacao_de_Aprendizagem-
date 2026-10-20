@@ -1,8 +1,8 @@
 <?php
 
-session_start();
+require_once '../infra/auth.php';
+exigir_login();
 
-require_once "../infra/conexao.php";
 
 $sql = "SELECT * FROM Sensor ORDER BY id_sensor DESC";
 $resultado = $conexao->query($sql);

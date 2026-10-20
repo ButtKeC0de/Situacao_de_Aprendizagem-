@@ -1,6 +1,11 @@
 <?php
 require_once '../infra/auth.php';
 
+if (isset($_SESSION['usuario_id'])) {
+    header("Location: home.php");
+    exit();
+}
+
 $erro = '';
 $email = '';
 
@@ -9,17 +14,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = $_POST['senha'] ?? '';
 
     if ($email === '' || $senha === '') {
-        $erro = 'Preencha o email e a senha.';
+        $erro = 'Preencha o usuário e a senha.';
     } else {
         $stmt = $conexao->prepare(
-            "SELECT id_usuario, nome, senha, id_perfil FROM Usuario WHERE email = ?"
+            "SELECT id_usuario, nome, senha, id_perfil FROM Usuario WHERE email = ? OR nome = ?"
         );
-        $stmt->bind_param("s", $email);
+        $stmt->bind_param("ss", $email, $email);
         $stmt->execute();
-        $usuario = $stmt->get_result()->fetch_assoc();
+        $encontrados = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
 
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
+        $usuario = null;
+        foreach ($encontrados as $encontrado) {
+            if (password_verify($senha, $encontrado['senha'])) {
+                $usuario = $encontrado;
+                break;
+            }
+        }
+
+        if ($usuario) {
             session_regenerate_id(true);
 
             $_SESSION['usuario_id'] = (int)$usuario['id_usuario'];
@@ -30,9 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        $erro = 'Email ou senha incorretos.';
+        $erro = 'Usuário ou senha incorretos.';
     }
 }
+
+$cadastroOk = isset($_GET['cadastro']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -66,10 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <form id="formLogin" action="login.php" method="POST">
                     <label class="label_login" for="email">
-                        Email
+                        Email ou usuário
                     </label>
 
-                    <input class="form_text" type="email" id="email" placeholder="Email" required name="email" value="<?= htmlspecialchars($email) ?>">
+                    <input class="form_text" type="text" id="email" placeholder="Email ou usuário" required name="email" value="<?= htmlspecialchars($email) ?>">
 
                     <br>
 
@@ -115,6 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if ($erro !== ''): ?>
         <script>alert(<?= json_encode($erro, JSON_UNESCAPED_UNICODE) ?>);</script>
+    <?php elseif ($cadastroOk): ?>
+        <script>alert('Cadastro realizado! Agora é só entrar.');</script>
     <?php endif; ?>
 
 </body>

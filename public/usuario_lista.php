@@ -69,9 +69,14 @@ $usuarios = $conexao->query(
 
                 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
                     <h1 class="titulo m-0">Usuários</h1>
-                    <a href="Perfil.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
-                        ← Meu perfil
-                    </a>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="usuario_cadastro.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
+                            + Cadastrar usuário
+                        </a>
+                        <a href="Perfil.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
+                            ← Meu perfil
+                        </a>
+                    </div>
                 </div>
 
                 <?php

@@ -25,6 +25,9 @@ CREATE TABLE IF NOT EXISTS Usuario (
     ON UPDATE CASCADE
 );
 
+INSERT IGNORE INTO Usuario (nome, email, senha, id_perfil) VALUES
+('caio123', 'caio123@railview.com', '$2y$10$1Ne6Q8VbsDZcU/0qcupHY.eDoISn6Bbrk3hA0tl9HcT2vf4RMceni', 1);
+
 CREATE TABLE IF NOT EXISTS Trem (
     id_trem INT AUTO_INCREMENT PRIMARY KEY,
     apelido VARCHAR(100) NOT NULL,

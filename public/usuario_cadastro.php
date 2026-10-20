@@ -1,6 +1,10 @@
 <?php
-require_once '../infra/conexao.php';
-session_start();
+require_once '../infra/auth.php';
+
+if (isset($_SESSION['usuario_id'])) {
+    exigir_login();
+}
+$adminCadastrando = eh_admin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -8,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $senha = $_POST['senha'] ?? '';
     $confirmaSenha = $_POST['confirmaSenha'] ?? '';
+
+    $id_perfil = $adminCadastrando
+        ? filter_input(INPUT_POST, 'id_perfil', FILTER_VALIDATE_INT)
+        : PERFIL_USUARIO;
 
     if ($nome === '' || $email === '' || $senha === '') {
         echo "<script>alert('Preencha todos os campos.');</script>";
@@ -17,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } elseif ($senha !== $confirmaSenha) {
         echo "<script>alert('As senhas não coincidem.');</script>";
+
+    } elseif (!in_array($id_perfil, [PERFIL_ADMIN, PERFIL_FUNCIONARIO, PERFIL_USUARIO], true)) {
+        echo "<script>alert('Perfil inválido.');</script>";
 
     } else {
 
@@ -34,19 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } else {
 
-            $dominio = substr(strrchr($email, "@"), 1);
-
-            if ($dominio === 'admin.com') {
-                $id_perfil = 1;
-            } elseif (
-                $dominio === 'railview.com' ||
-                $dominio === 'funcionario.com'
-            ) {
-                $id_perfil = 2;
-            } else {
-                $id_perfil = 3;
-            }
-
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
             $stmt = $conexao->prepare(
@@ -63,10 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
 
             if ($stmt->execute()) {
-                $_SESSION['usuario_id'] = $conexao->insert_id;
-                $_SESSION['id_perfil'] = $id_perfil;
-
-                header("Location: login.php");
+                if ($adminCadastrando) {
+                    $_SESSION['mensagem'] = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                                                Usuário '<strong>" . htmlspecialchars($nome) . "</strong>' cadastrado com sucesso!
+                                                <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
+                                            </div>";
+                    header("Location: usuario_lista.php");
+                } else {
+                    header("Location: login.php?cadastro=ok");
+                }
                 exit();
             } else {
                 echo "<script>alert('Erro ao cadastrar usuário.');</script>";
@@ -176,6 +179,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <br>
 
+                        <?php if ($adminCadastrando): ?>
+
+                        <label class="label_login" for="perfilCadastro">
+                            Perfil
+                        </label>
+
+                        <select class="form_text" id="perfilCadastro" name="id_perfil" required>
+                            <option value="<?= PERFIL_USUARIO ?>">Usuário</option>
+                            <option value="<?= PERFIL_FUNCIONARIO ?>">Funcionário</option>
+                            <option value="<?= PERFIL_ADMIN ?>">Administrador</option>
+                        </select>
+
+                        <br>
+
+                        <div class="login_1">
+                            <a href="usuario_lista.php" style="text-decoration: none; color: inherit; display: block; text-align: center;">
+                                ← Voltar para a lista de usuários
+                            </a>
+                        </div>
+
+                        <?php else: ?>
+
                         <div class="login_1">
 
                             <input
@@ -214,6 +239,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </a>
 
                         </div>
+
+                        <?php endif; ?>
 
                         <br>
 

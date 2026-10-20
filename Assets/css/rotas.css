@@ -9,6 +9,7 @@
     --texto-suave: #717784;
     --perigo: #e45b64;
     --sombra: 0 14px 35px rgba(32, 38, 52, 0.12);
+    --sidebar-largura: 100px;
 }
 
 * {
@@ -39,70 +40,91 @@ a {
     min-height: 100vh;
 }
 
-.principal {
+
+/* ============================================================
+   SIDEBAR (padrão da primeira imagem)
+   ============================================================ */
+.sidebar {
     position: fixed;
     inset: 0 auto 0 0;
     z-index: 10;
-    width: 112px;
-    padding: 18px 14px;
+    width: var(--sidebar-largura);
+    padding: 25px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: var(--laranja);
-    box-shadow: 6px 0 25px rgba(38, 42, 52, 0.12);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.logo-link {
-    display: block;
+.sidebar-logo {
+    margin-bottom: 35px;
+    /* Se a logo do topo também estiver com fundo, descomente a linha abaixo */
+    /* background: transparent; */
 }
 
-.logo-principal {
-    display: block;
-    width: 72px;
-    height: 72px;
+.sidebar-logo img {
+    width: 70px;
+    height: 70px;
     object-fit: contain;
+    display: block;
 }
 
-#logos_barra_lateral {
-    flex: 1;
-    width: 100%;
-    margin-top: 55px;
+.sidebar-nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
+    gap: 24px;
+    flex: 1;
 }
 
-.menu-link {
-    width: 68px;
-    height: 68px;
-    display: grid;
-    place-items: center;
-    border-radius: 20px;
-    transition: transform 0.2s ease, background 0.2s ease;
+.sidebar-nav a,
+.sidebar-logout a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    /* Remove o fundo escuro e a borda, deixando apenas o laranja da sidebar */
+    background: transparent !important;
+    border: none;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: transform 0.2s ease;
 }
 
-.menu-link:last-child {
-    margin-top: auto;
-}
 
-.menu-link:hover,
-.menu-link:focus-visible,
-.menu-link.ativo {
+.sidebar-nav a:hover,
+.sidebar-logout a:hover,
+.sidebar-nav a:focus-visible,
+.sidebar-logout a:focus-visible {
     outline: none;
-    background: rgba(255, 255, 255, 0.32);
-    transform: translateY(-2px);
+    transform: scale(1.08);
+
 }
 
-.logos {
-    width: 48px;
-    height: 48px;
+.sidebar-nav a.ativo {
+
+    background: transparent !important;
+}
+
+
+.sidebar-nav a img,
+.sidebar-logout a img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
+.sidebar-logout {
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+
 .conteudo {
     min-height: 100vh;
-    margin-left: 112px;
+    margin-left: var(--sidebar-largura);
     padding: 34px clamp(24px, 4vw, 64px) 50px;
     background:
         radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.85), transparent 34%),
@@ -140,6 +162,8 @@ a {
     padding: 8px 14px 8px 8px;
     border-radius: 30px;
     background: rgba(255, 255, 255, 0.72);
+    color: inherit;
+    text-decoration: none;
 }
 
 .foto_usuario {
@@ -157,6 +181,7 @@ a {
     font-size: 0.95rem;
     font-weight: 500;
 }
+
 
 #rotas_cadastradas {
     width: 100%;
@@ -211,6 +236,9 @@ a {
     font-size: 0.86rem;
 }
 
+/* ============================================================
+   FORMULÁRIO
+   ============================================================ */
 .formrota {
     display: flex;
     flex-direction: column;
@@ -289,6 +317,14 @@ a {
     background: var(--laranja-escuro);
     transform: translateY(-2px);
 }
+
+.link-cancelar {
+    color: #bdc3d1;
+    font-size: 0.86rem;
+    text-align: center;
+    text-decoration: none;
+}
+
 
 #trens_2 {
     min-height: 435px;
@@ -384,26 +420,6 @@ a {
     font-size: 0.82rem;
 }
 
-.btn-excluir {
-    width: 39px;
-    height: 39px;
-    display: grid;
-    place-items: center;
-    border: 0;
-    border-radius: 11px;
-    color: #ffb3b8;
-    background: rgba(228, 91, 100, 0.15);
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
-}
-
-.btn-excluir:hover,
-.btn-excluir:focus-visible {
-    outline: none;
-    color: var(--branco);
-    background: var(--perigo);
-}
-
 .rota-acoes {
     display: flex;
     gap: 8px;
@@ -428,16 +444,26 @@ a {
     background: var(--laranja);
 }
 
-.link-cancelar {
-    color: #bdc3d1;
-    font-size: 0.86rem;
-    text-align: center;
+.btn-excluir {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 11px;
+    color: #ffb3b8;
+    background: rgba(228, 91, 100, 0.15);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-a.usuario {
-    color: inherit;
-    text-decoration: none;
+.btn-excluir:hover,
+.btn-excluir:focus-visible {
+    outline: none;
+    color: var(--branco);
+    background: var(--perigo);
 }
+
 
 .estado-vazio {
     min-height: 270px;
@@ -514,6 +540,7 @@ a.usuario {
     border: 0;
 }
 
+
 @media (max-width: 1050px) {
     #rotas_cadastradas {
         grid-template-columns: 1fr;
@@ -527,39 +554,43 @@ a.usuario {
 }
 
 @media (max-width: 700px) {
-    .principal {
-        position: fixed;
+    /* Sidebar vira barra inferior */
+    .sidebar {
         inset: auto 0 0;
         width: 100%;
         height: 78px;
         padding: 8px 16px;
         flex-direction: row;
+        justify-content: space-around;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .logo-link {
+    .sidebar-logo {
         display: none;
     }
 
-    #logos_barra_lateral {
+    .sidebar-nav {
         flex: initial;
         width: 100%;
-        margin: 0;
         flex-direction: row;
         justify-content: space-around;
         gap: 8px;
     }
 
-    .menu-link,
-    .menu-link:last-child {
+    .sidebar-nav a,
+    .sidebar-logout a {
         width: 56px;
         height: 56px;
-        margin: 0;
-        border-radius: 16px;
     }
 
-    .logos {
-        width: 40px;
-        height: 40px;
+    .sidebar-nav a img,
+    .sidebar-logout a img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .sidebar-logout {
+        margin: 0;
     }
 
     .conteudo {
@@ -615,11 +646,4 @@ a.usuario {
     .rota-id {
         min-width: 50px;
     }
-}
-
-#logos_barra_lateral {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  margin-bottom: 20px;
 }

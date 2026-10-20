@@ -2,7 +2,6 @@
 require_once '../infra/auth.php';
 exigir_login();
 
-
 $mensagem = $_SESSION['mensagem_rota'] ?? null;
 unset($_SESSION['mensagem_rota']);
 
@@ -168,43 +167,32 @@ $editando = !empty($rotaForm['id_rota']);
 
 <body>
     <div class="tela">
-        <div class="d-flex h-100">
-            <div class="principal">
-                <div>
-                    <div>
-                        <img class="logos" src="../Assets/logos/Logo.png" alt="Logo">
-                    </div>
-
-                    <div id="logos_barra_lateral">
-                        <div>
-                           <a href="../public/criacao_rotas.php">
-                        <img class="logos" src="../Assets/logos/icon_rotas.png" alt="">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/trens_home.php">
-                        <img class="logos" src="../Assets/logos/icon_trem.png" alt="">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/sensor_home.php">
-                        <img class="logos" src="../Assets/logos/icon_sensores.png" alt="">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/logout.php">
-                            <img class="logos" src="../Assets/logos/icon_saida.png" alt="">
-                        </a>
-                        </div>
-                    </div>
 
 
-                </div>
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../Assets/logos/Logo.png" alt="Logo">
             </div>
-        </div>
+
+            <nav class="sidebar-nav">
+                <a href="../public/criacao_rotas.php" title="Rotas" class="ativo">
+                    <img src="../Assets/logos/icon_rotas.png" alt="Rotas">
+                </a>
+                <a href="../public/trens_home.php" title="Trens">
+                    <img src="../Assets/logos/icon_trem.png" alt="Trens">
+                </a>
+                <a href="../public/sensor_home.php" title="Sensores">
+                    <img src="../Assets/logos/icon_sensores.png" alt="Sensores">
+                </a>
+            </nav>
+
+            <div class="sidebar-logout">
+                <a href="../public/logout.php" title="Sair">
+                    <img src="../Assets/logos/icon_saida.png" alt="Sair">
+                </a>
+            </div>
+        </aside>
+
 
         <main class="conteudo">
             <header class="topo">
@@ -312,16 +300,16 @@ $editando = !empty($rotaForm['id_rota']);
                                 </div>
                                 <?php if (eh_admin()): ?>
                                 <div class="rota-acoes">
-                                        <a class="btn-editar" href="criacao_rotas.php?editar=<?= (int)$rota['id_rota'] ?>" title="Editar rota" aria-label="Editar rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>">
-                                            <i class="bi bi-pencil-fill" aria-hidden="true"></i>
-                                        </a>
-                                        <form method="POST" action="criacao_rotas.php" class="form-excluir" data-trajeto="<?= htmlspecialchars($rota['origem'] . ' → ' . $rota['destino']) ?>">
-                                            <input type="hidden" name="acao" value="excluir">
-                                            <input type="hidden" name="id_rota" value="<?= (int)$rota['id_rota'] ?>">
-                                            <button class="btn-excluir" type="submit" aria-label="Excluir rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>" title="Excluir rota">
-                                                <i class="bi bi-trash3-fill" aria-hidden="true"></i>
-                                            </button>
-                                        </form>
+                                    <a class="btn-editar" href="criacao_rotas.php?editar=<?= (int)$rota['id_rota'] ?>" title="Editar rota" aria-label="Editar rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>">
+                                        <i class="bi bi-pencil-fill" aria-hidden="true"></i>
+                                    </a>
+                                    <form method="POST" action="criacao_rotas.php" class="form-excluir" data-trajeto="<?= htmlspecialchars($rota['origem'] . ' → ' . $rota['destino']) ?>">
+                                        <input type="hidden" name="acao" value="excluir">
+                                        <input type="hidden" name="id_rota" value="<?= (int)$rota['id_rota'] ?>">
+                                        <button class="btn-excluir" type="submit" aria-label="Excluir rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>" title="Excluir rota">
+                                            <i class="bi bi-trash3-fill" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
                                 </div>
                                 <?php endif; ?>
                             </article>
@@ -339,7 +327,6 @@ $editando = !empty($rotaForm['id_rota']);
             <section class="parte_baixo_home" aria-labelledby="tituloMapa">
                 <div class="mapa-cabecalho">
                     <h2 id="tituloMapa">Mapa das rotas</h2>
-
                 </div>
 
                 <div class="card_mapa">

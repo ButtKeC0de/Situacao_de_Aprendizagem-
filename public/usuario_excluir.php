@@ -2,8 +2,6 @@
 require_once '../infra/auth.php';
 exigir_login();
 
-// Exclusão só por POST (formulário com confirmação). Por GET, bastaria alguém
-// abrir um link como usuario_excluir.php?id=5 para apagar uma conta.
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: Perfil.php");
     exit();
@@ -12,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $id = filter_input(INPUT_POST, 'id_usuario', FILTER_VALIDATE_INT);
 $excluindoASiMesmo = $id === $_SESSION['usuario_id'];
 
-// RN08 / RF11: cada usuário pode excluir a própria conta; a dos outros, só o administrador
 if (!$excluindoASiMesmo && !eh_admin()) {
     negar_acesso();
 }
@@ -31,7 +28,6 @@ if (!$usuario) {
     exit();
 }
 
-// O sistema não pode ficar sem nenhum administrador para gerenciar os cadastros
 if ((int)$usuario['id_perfil'] === PERFIL_ADMIN) {
     $totalAdmins = $conexao->query("SELECT COUNT(*) FROM Usuario WHERE id_perfil = " . PERFIL_ADMIN)->fetch_row()[0];
 

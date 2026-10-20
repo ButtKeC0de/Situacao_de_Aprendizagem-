@@ -5,12 +5,10 @@ exigir_login();
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?: $_SESSION['usuario_id'];
 $editandoASiMesmo = $id === $_SESSION['usuario_id'];
 
-// Cada um edita os próprios dados; só o administrador edita os dos outros
 if (!$editandoASiMesmo && !eh_admin()) {
     negar_acesso();
 }
 
-// Para onde voltar depois de salvar
 $voltarPara = (eh_admin() && !$editandoASiMesmo) ? 'usuario_lista.php' : 'Perfil.php';
 
 $stmt = $conexao->prepare("SELECT id_usuario, nome, email, id_perfil FROM Usuario WHERE id_usuario = ?");
@@ -34,12 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $novaSenha = $_POST['nova_senha'] ?? '';
     $confirmaSenha = $_POST['confirma_senha'] ?? '';
 
-    // Só o administrador muda perfil; para os outros, o perfil continua o mesmo
     $id_perfil = eh_admin()
         ? filter_input(INPUT_POST, 'id_perfil', FILTER_VALIDATE_INT)
         : (int)$usuario['id_perfil'];
 
-    // Mostra no formulário o que foi digitado, mesmo se der erro
     $usuario['nome'] = $nome;
     $usuario['email'] = $email;
 
@@ -67,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 
-    // O sistema não pode ficar sem nenhum administrador
     if ($erro === '' && (int)$usuario['id_perfil'] === PERFIL_ADMIN && $id_perfil !== PERFIL_ADMIN) {
         $totalAdmins = $conexao->query("SELECT COUNT(*) FROM Usuario WHERE id_perfil = " . PERFIL_ADMIN)->fetch_row()[0];
         if ($totalAdmins <= 1) {
@@ -91,7 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
                                     </div>";
 
-            // Se o administrador tirou o próprio perfil de admin, ele não pode mais ver a lista
             if ($editandoASiMesmo) {
                 $voltarPara = 'Perfil.php';
             }

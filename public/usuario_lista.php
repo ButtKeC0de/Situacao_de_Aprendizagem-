@@ -1,6 +1,5 @@
 <?php
 require_once '../infra/auth.php';
-// RN17 / RN20: só administradores gerenciam os cadastros de usuários
 exigir_admin();
 
 $usuarios = $conexao->query(
@@ -111,7 +110,6 @@ $usuarios = $conexao->query(
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
 
-                                        <!-- Exclusão por POST: um link (GET) poderia ser disparado sem querer, por exemplo ao abrir uma URL -->
                                         <form action="usuario_excluir.php" method="POST" class="d-inline" onsubmit="return confirm(<?= htmlspecialchars(json_encode('Tem certeza que deseja excluir o usuário ' . $usuario['nome'] . '?')) ?>);">
                                             <input type="hidden" name="id_usuario" value="<?= (int)$usuario['id_usuario'] ?>">
                                             <button type="submit" class="btn btn-danger btn-sm rounded-3" title="Excluir">

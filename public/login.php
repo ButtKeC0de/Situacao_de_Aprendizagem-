@@ -19,8 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $usuario = $stmt->get_result()->fetch_assoc();
         $stmt->close();
 
-        // A senha foi salva com password_hash() no cadastro, então é conferida com password_verify().
-        // A mesma mensagem para email inexistente e senha errada não revela quais emails existem.
         if ($usuario && password_verify($senha, $usuario['senha'])) {
             session_regenerate_id(true);
 

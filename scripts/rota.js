@@ -1,7 +1,5 @@
 "use strict";
 
-// As rotas agora vêm do banco (criacao_rotas.php). Este script cuida só do que
-// acontece no navegador: pesquisa, contador, validação rápida e confirmação de exclusão.
 
 const formulario = document.getElementById("formRota");
 const inputOrigem = document.getElementById("origem");
@@ -23,7 +21,6 @@ function normalizarTexto(texto) {
 }
 
 function mostrarMensagem(texto, tipo = "") {
-    // O perfil "Usuario" não tem formulário, então não há onde mostrar mensagem
     if (!mensagemFormulario) {
         return;
     }
@@ -88,7 +85,6 @@ function filtrarRotas(filtro = "") {
 }
 
 if (formulario) {
-    // O servidor valida tudo de novo; aqui é só para avisar antes de enviar
     formulario.addEventListener("submit", (evento) => {
         if (normalizarTexto(inputOrigem.value) === normalizarTexto(inputDestino.value)) {
             evento.preventDefault();
@@ -110,7 +106,6 @@ listaRotas.addEventListener("submit", (evento) => {
     }
 });
 
-// Mensagem que veio do servidor (rota salva, excluída ou erro) some depois de alguns segundos
 if (mensagemFormulario && mensagemFormulario.textContent.trim()) {
     mostrarMensagem(mensagemFormulario.textContent.trim(), mensagemFormulario.classList.contains("erro") ? "erro" : "sucesso");
 }

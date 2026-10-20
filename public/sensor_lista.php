@@ -116,19 +116,16 @@ if ($resultado) {
                                 <div class="col-md-6 col-lg-4 item-sensor">
                                     <div class="card-sensor">
                                         
-                                        <!-- Topo do card com Status + Botões de Editar/Excluir -->
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <div class="d-flex align-items-center gap-2">
                                                 <span class="badge badge-status <?= $statusClass ?>">
                                                     <?= htmlspecialchars($sensor['status_sensor']) ?>
                                                 </span>
 
-                                                <!-- Botão Editar -->
                                                 <a href="sensor_editar.php?id=<?= $sensor['id_sensor'] ?>" class="btn btn-sm btn-warning text-dark fw-bold rounded-pill px-2 py-0" style="font-size: 0.75rem;" title="Editar">
                                                     Editar
                                                 </a>
 
-                                                <!-- Botão Excluir -->
                                                 <a href="sensor_excluir.php?id=<?= $sensor['id_sensor'] ?>" class="btn btn-sm btn-danger text-white fw-bold rounded-pill px-2 py-0" style="font-size: 0.75rem;" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir este sensor?');">
                                                     Excluir
                                                 </a>

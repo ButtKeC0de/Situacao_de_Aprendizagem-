@@ -2,12 +2,8 @@
 require_once '../infra/conexao.php';
 session_start();
 
-// As rotas eram salvas só no localStorage do navegador: sumiam ao trocar de
-// computador, ninguém mais via, e o "ID do trem" nunca era conferido.
-// Agora ficam na tabela Rota, e o trem é ligado à rota pela tabela
-// Historico_Rota, como está no DER.
 
-$mensagem = $_SESSION['mensagem_rota'] ?? null; // ['texto' => ..., 'tipo' => 'sucesso' | 'erro']
+$mensagem = $_SESSION['mensagem_rota'] ?? null;
 unset($_SESSION['mensagem_rota']);
 
 $rotaForm = ['id_rota' => null, 'id_trem' => '', 'origem' => '', 'destino' => '', 'operadora' => ''];
@@ -16,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (($_POST['acao'] ?? '') === 'excluir') {
         $id_rota = filter_input(INPUT_POST, 'id_rota', FILTER_VALIDATE_INT);
 
-        // O vínculo em Historico_Rota é apagado junto (ON DELETE CASCADE)
         $stmt = $conexao->prepare("DELETE FROM Rota WHERE id_rota = ?");
         $stmt->bind_param("i", $id_rota);
         $excluiu = $stmt->execute() && $stmt->affected_rows > 0;
@@ -30,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Cadastrar (sem id_rota) ou editar (com id_rota)
     $rotaForm = [
         'id_rota' => filter_input(INPUT_POST, 'id_rota', FILTER_VALIDATE_INT) ?: null,
         'id_trem' => filter_input(INPUT_POST, 'id_trem', FILTER_VALIDATE_INT) ?: '',
@@ -62,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($erro === '') {
         $nome_rota = $rotaForm['origem'] . ' - ' . $rotaForm['destino'];
 
-        // Rota e Historico_Rota são gravadas juntas: se uma falhar, nenhuma fica salva
         $conexao->begin_transaction();
 
         if ($rotaForm['id_rota']) {
@@ -138,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $trens = $conexao->query("SELECT id_trem, apelido FROM Trem ORDER BY apelido")->fetch_all(MYSQLI_ASSOC);
 
-// Cada rota com o trem do vínculo mais recente em Historico_Rota
 $rotas = $conexao->query(
     "SELECT r.id_rota, r.origem, r.destino, r.operadora, h.id_trem, t.apelido
      FROM Rota r

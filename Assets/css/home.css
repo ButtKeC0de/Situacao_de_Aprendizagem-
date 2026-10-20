@@ -9,9 +9,6 @@ body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-/* ===================================
-   NAVBAR & ESTILOS DO CABEÇALHO
-   =================================== */
 .navbar {
     background-color: #fca339;
     padding: 12px 0;
@@ -33,16 +30,14 @@ body {
     object-fit: contain;
 }
 
-/* Container que agrupa os 4 ícones no canto direito */
 .menu-icones {
     display: flex;
     align-items: center;
-    gap: 25px; /* Espaçamento entre os ícones */
+    gap: 25px;
 }
 
-/* Tamanho aumentado para os 4 ícones */
 .logos {
-    height: 65px; /* Aumentado para destacá-los bem na navbar */
+    height: 65px;
     width: auto;
     object-fit: contain;
     transition: transform 0.2s ease;
@@ -52,9 +47,6 @@ body {
     transform: scale(1.1);
 }
 
-/* ===================================
-   COMPONENTES DE CONTEÚDO E CARDS
-   =================================== */
 .bg_yelllow {
     background-color: rgb(248, 164, 62);
     border: none;

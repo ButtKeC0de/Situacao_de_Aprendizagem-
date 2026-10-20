@@ -115,7 +115,6 @@ $stmt->close();
                     </div>
 
                     <div class="col-md-6 d-flex justify-content-center align-items-center">
-                        <!-- RN08 / RF11: o usuário pode excluir a própria conta -->
                         <form action="usuario_excluir.php" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita.');">
                             <input type="hidden" name="id_usuario" value="<?= (int)$usuario['id_usuario'] ?>">
                             <button type="submit" class="btn btn-danger rounded-pill px-4 py-2">

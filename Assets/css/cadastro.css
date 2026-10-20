@@ -123,8 +123,6 @@ html, body {
     background-color: #f0f0f0;
 }
 
-/* Em telas mais baixas que o formulário (850px), como notebooks de 768px,
-   ele era cortado em cima e embaixo sem poder rolar a página */
 @media (max-height: 870px) {
     html, body {
         overflow: auto;

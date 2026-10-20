@@ -2,12 +2,7 @@
 require_once '../infra/conexao.php';
 session_start();
 
-// As rotas eram salvas só no localStorage do navegador: sumiam ao trocar de
-// computador, ninguém mais via, e o "ID do trem" nunca era conferido.
-// Agora ficam na tabela Rota, e o trem é ligado à rota pela tabela
-// Historico_Rota, como está no DER.
-
-$mensagem = $_SESSION['mensagem_rota'] ?? null; // ['texto' => ..., 'tipo' => 'sucesso' | 'erro']
+$mensagem = $_SESSION['mensagem_rota'] ?? null;
 unset($_SESSION['mensagem_rota']);
 
 $rotaForm = ['id_rota' => null, 'id_trem' => '', 'origem' => '', 'destino' => '', 'operadora' => ''];
@@ -16,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (($_POST['acao'] ?? '') === 'excluir') {
         $id_rota = filter_input(INPUT_POST, 'id_rota', FILTER_VALIDATE_INT);
 
-        // O vínculo em Historico_Rota é apagado junto (ON DELETE CASCADE)
         $stmt = $conexao->prepare("DELETE FROM Rota WHERE id_rota = ?");
         $stmt->bind_param("i", $id_rota);
         $excluiu = $stmt->execute() && $stmt->affected_rows > 0;
@@ -30,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Cadastrar (sem id_rota) ou editar (com id_rota)
     $rotaForm = [
         'id_rota' => filter_input(INPUT_POST, 'id_rota', FILTER_VALIDATE_INT) ?: null,
         'id_trem' => filter_input(INPUT_POST, 'id_trem', FILTER_VALIDATE_INT) ?: '',
@@ -62,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($erro === '') {
         $nome_rota = $rotaForm['origem'] . ' - ' . $rotaForm['destino'];
 
-        // Rota e Historico_Rota são gravadas juntas: se uma falhar, nenhuma fica salva
         $conexao->begin_transaction();
 
         if ($rotaForm['id_rota']) {
@@ -138,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $trens = $conexao->query("SELECT id_trem, apelido FROM Trem ORDER BY apelido")->fetch_all(MYSQLI_ASSOC);
 
-// Cada rota com o trem do vínculo mais recente em Historico_Rota
 $rotas = $conexao->query(
     "SELECT r.id_rota, r.origem, r.destino, r.operadora, h.id_trem, t.apelido
      FROM Rota r
@@ -172,43 +163,32 @@ $editando = !empty($rotaForm['id_rota']);
 
 <body>
     <div class="tela">
-        <div class="d-flex h-100">
-            <div class="principal">
-                <div>
-                    <div>
-                        <img class="logos" src="../Assets/logos/Logo.png" alt="Logo">
-                    </div>
-
-                    <div id="logos_barra_lateral">
-                        <div>
-                           <a href="../public/criacao_rotas.php">
-                        <img class="logos" src="../Assets/logos/icon_rotas.png" alt="">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/trens_home.php">
-                        <img class="logos" src="../Assets/logos/icon_trem.png" alt="">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/sensor_home.php">
-                        <img class="logos" src="../Assets/logos/icon_sensores.png" alt="">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/logout.php">
-                            <img class="logos" src="../Assets/logos/icon_saida.png" alt="">
-                        </a>
-                        </div>
-                    </div>
 
 
-                </div>
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../Assets/logos/Logo.png" alt="Logo">
             </div>
-        </div>
+
+            <nav class="sidebar-nav">
+                <a href="../public/criacao_rotas.php" title="Rotas" class="ativo">
+                    <img src="../Assets/logos/icon_rotas.png" alt="Rotas">
+                </a>
+                <a href="../public/trens_home.php" title="Trens">
+                    <img src="../Assets/logos/icon_trem.png" alt="Trens">
+                </a>
+                <a href="../public/sensor_home.php" title="Sensores">
+                    <img src="../Assets/logos/icon_sensores.png" alt="Sensores">
+                </a>
+            </nav>
+
+            <div class="sidebar-logout">
+                <a href="../public/logout.php" title="Sair">
+                    <img src="../Assets/logos/icon_saida.png" alt="Sair">
+                </a>
+            </div>
+        </aside>
+
 
         <main class="conteudo">
             <header class="topo">
@@ -308,16 +288,16 @@ $editando = !empty($rotaForm['id_rota']);
                                     </span>
                                 </div>
                                 <div class="rota-acoes">
-                                        <a class="btn-editar" href="criacao_rotas.php?editar=<?= (int)$rota['id_rota'] ?>" title="Editar rota" aria-label="Editar rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>">
-                                            <i class="bi bi-pencil-fill" aria-hidden="true"></i>
-                                        </a>
-                                        <form method="POST" action="criacao_rotas.php" class="form-excluir" data-trajeto="<?= htmlspecialchars($rota['origem'] . ' → ' . $rota['destino']) ?>">
-                                            <input type="hidden" name="acao" value="excluir">
-                                            <input type="hidden" name="id_rota" value="<?= (int)$rota['id_rota'] ?>">
-                                            <button class="btn-excluir" type="submit" aria-label="Excluir rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>" title="Excluir rota">
-                                                <i class="bi bi-trash3-fill" aria-hidden="true"></i>
-                                            </button>
-                                        </form>
+                                    <a class="btn-editar" href="criacao_rotas.php?editar=<?= (int)$rota['id_rota'] ?>" title="Editar rota" aria-label="Editar rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>">
+                                        <i class="bi bi-pencil-fill" aria-hidden="true"></i>
+                                    </a>
+                                    <form method="POST" action="criacao_rotas.php" class="form-excluir" data-trajeto="<?= htmlspecialchars($rota['origem'] . ' → ' . $rota['destino']) ?>">
+                                        <input type="hidden" name="acao" value="excluir">
+                                        <input type="hidden" name="id_rota" value="<?= (int)$rota['id_rota'] ?>">
+                                        <button class="btn-excluir" type="submit" aria-label="Excluir rota de <?= htmlspecialchars($rota['origem']) ?> para <?= htmlspecialchars($rota['destino']) ?>" title="Excluir rota">
+                                            <i class="bi bi-trash3-fill" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </article>
                         <?php endforeach; ?>
@@ -334,7 +314,6 @@ $editando = !empty($rotaForm['id_rota']);
             <section class="parte_baixo_home" aria-labelledby="tituloMapa">
                 <div class="mapa-cabecalho">
                     <h2 id="tituloMapa">Mapa das rotas</h2>
-
                 </div>
 
                 <div class="card_mapa">

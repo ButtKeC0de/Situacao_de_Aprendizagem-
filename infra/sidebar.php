@@ -1,8 +1,8 @@
 <?php
 $paginaAtual = basename($_SERVER['PHP_SELF']);
-$ativoRotas = str_starts_with($paginaAtual, 'criacao_rotas') ? 'ativo' : '';
-$ativoTrens = str_starts_with($paginaAtual, 'trens_') ? 'ativo' : '';
-$ativoSensores = str_starts_with($paginaAtual, 'sensor_') ? 'ativo' : '';
+$ativoRotas = strpos($paginaAtual, 'criacao_rotas') === 0 ? 'ativo' : '';
+$ativoTrens = strpos($paginaAtual, 'trens_') === 0 ? 'ativo' : '';
+$ativoSensores = strpos($paginaAtual, 'sensor_') === 0 ? 'ativo' : '';
 ?>
 <aside class="sidebar">
     <a class="sidebar-logo" href="home.php" title="Início">

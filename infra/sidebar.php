@@ -21,9 +21,11 @@ $ativoSensores = strpos($paginaAtual, 'sensor_') === 0 ? 'ativo' : '';
         </a>
     </nav>
 
+
     <div class="sidebar-logout">
-        <a href="../index.html" title="Sair">
+        <a href="../public/logout.php" title="Sair">
             <img src="../Assets/logos/icon_saida.png" alt="Sair">
         </a>
     </div>
+
 </aside>

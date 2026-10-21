@@ -2,148 +2,311 @@
 require_once '../infra/auth.php';
 exigir_admin();
 
+$mensagem = '';
+$modelo = '';
+$apelido = '';
+$operadora = '';
+$tipo = '';
+$vagoes = '';
+$id_usuario = '';
 
-$mensagem = "";
+$usuarios = [];
+$resultado_usuarios = $conexao->query(
+    "SELECT id_usuario, nome
+     FROM Usuario
+     ORDER BY nome"
+);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $modelo    = $_POST['modelo'] ?? '';
-    $apelido   = $_POST['apelido'] ?? '';
-    $operadora = $_POST['operadora'] ?? '';
-    $tipo      = $_POST['tipo'] ?? '';
-    $vagoes    = $_POST['vagoes'] ?? '';
+if ($resultado_usuarios) {
+    while ($usuario = $resultado_usuarios->fetch_assoc()) {
+        $usuarios[] = $usuario;
+    }
+}
 
-    if (!empty($modelo) && !empty($apelido) && !empty($tipo) && !empty($vagoes)) {
-        
-        $sql = "INSERT INTO Trem (modelo, apelido, tipo_trem, empresa_operadora, numero_vagoes) 
-                VALUES (?, ?, ?, ?, ?)";
-        
-        $stmt = $conexao->prepare($sql);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $modelo = trim($_POST['modelo'] ?? '');
+    $apelido = trim($_POST['apelido'] ?? '');
+    $operadora = trim($_POST['operadora'] ?? '');
+    $tipo = trim($_POST['tipo'] ?? '');
+    $vagoes = filter_input(
+        INPUT_POST,
+        'vagoes',
+        FILTER_VALIDATE_INT
+    );
+    $id_usuario = filter_input(
+        INPUT_POST,
+        'id_usuario',
+        FILTER_VALIDATE_INT
+    );
 
-        if ($stmt) {
-            $stmt->bind_param("ssssi", $modelo, $apelido, $tipo, $operadora, $vagoes);
-
-            if ($stmt->execute()) {
-                $_SESSION['mensagem'] = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-                                            Trem '<strong>{$apelido}</strong>' cadastrado com sucesso!
-                                            <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
-                                        </div>";
-
-                header("Location: trens_lista.php");
-                exit();
-            } else {
-                $mensagem = "<div class='alert alert-danger'>Erro ao cadastrar: " . $stmt->error . "</div>";
-            }
-
-            $stmt->close();
-        } else {
-            $mensagem = "<div class='alert alert-danger'>Erro na preparação da consulta: " . $conexao->error . "</div>";
-        }
-
+    if (
+        $modelo === '' ||
+        $apelido === '' ||
+        $tipo === '' ||
+        $vagoes === false ||
+        $vagoes === null ||
+        $vagoes < 1 ||
+        !$id_usuario
+    ) {
+        $mensagem = "<div class='alert alert-danger'>
+            Preencha os campos obrigatórios e selecione um responsável válido.
+        </div>";
     } else {
-        $mensagem = "<div class='alert alert-danger'>Por favor, preencha todos os campos obrigatórios.</div>";
+        // Confirma que o usuário selecionado realmente existe.
+        $stmt_usuario = $conexao->prepare(
+            "SELECT id_usuario
+             FROM Usuario
+             WHERE id_usuario = ?"
+        );
+
+        $stmt_usuario->bind_param('i', $id_usuario);
+        $stmt_usuario->execute();
+
+        $usuario_existe =
+            $stmt_usuario->get_result()->num_rows === 1;
+
+        $stmt_usuario->close();
+
+        if (!$usuario_existe) {
+            $mensagem = "<div class='alert alert-danger'>
+                O funcionário selecionado não existe.
+            </div>";
+        } else {
+            $sql = "INSERT INTO Trem (
+                        modelo,
+                        apelido,
+                        tipo_trem,
+                        empresa_operadora,
+                        numero_vagoes,
+                        id_usuario
+                    ) VALUES (?, ?, ?, ?, ?, ?)";
+
+            $stmt = $conexao->prepare($sql);
+
+            if ($stmt) {
+                $stmt->bind_param(
+                    'ssssii',
+                    $modelo,
+                    $apelido,
+                    $tipo,
+                    $operadora,
+                    $vagoes,
+                    $id_usuario
+                );
+
+                if ($stmt->execute()) {
+                    $_SESSION['mensagem'] =
+                        "<div class='alert alert-success'>
+                            Trem <strong>" .
+                            htmlspecialchars(
+                                $apelido,
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ) .
+                            "</strong> cadastrado com sucesso!
+                        </div>";
+
+                    $stmt->close();
+
+                    header('Location: trens_lista.php');
+                    exit();
+                }
+
+                $mensagem = "<div class='alert alert-danger'>
+                    Não foi possível cadastrar o trem.
+                    Verifique os dados e tente novamente.
+                </div>";
+
+                $stmt->close();
+            } else {
+                $mensagem = "<div class='alert alert-danger'>
+                    Não foi possível preparar o cadastro.
+                </div>";
+            }
+        }
     }
 }
 ?>
 <!doctype html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Trem</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap"
+          rel="stylesheet">
+
     <link rel="stylesheet" href="../Assets/css/trem.css">
     <link rel="stylesheet" href="../Assets/css/home.css">
     <link rel="stylesheet" href="../Assets/css/sidebar.css">
 </head>
-
 <body>
 
-    <div class="app-container">
+<div class="app-container">
+    <?php require '../infra/sidebar.php'; ?>
 
-        <?php require '../infra/sidebar.php'; ?>
+    <main class="content">
+        <section class="painel-cadastro">
 
-        <main class="content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="titulo m-0">Cadastrar trem</h1>
 
-            <section class="painel-cadastro">
+                <a href="trens_lista.php"
+                   class="btn btn-dark text-white rounded-pill px-4 py-2">
+                    ← Ver Lista
+                </a>
+            </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="titulo m-0">Cadastrar trem</h1>
-                    <a href="trens_lista.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
-                        ← Ver Lista
-                    </a>
+            <?= $mensagem ?>
+
+            <?php if (empty($usuarios)): ?>
+                <div class="alert alert-warning">
+                    Não existem usuários cadastrados.
+                    Cadastre um usuário antes de registrar um trem.
                 </div>
+            <?php endif; ?>
 
-                <?php if (!empty($mensagem)) echo $mensagem; ?>
+            <form action="" method="POST">
+                <div class="row g-4 align-items-center">
 
-                <form action="" method="POST">
-                    <div class="row g-4 align-items-center">
+                    <div class="col-lg-8">
+                        <div class="row g-4">
 
-                        <div class="col-lg-8">
+                            <div class="col-md-6">
+                                <div class="card-input">
+                                    <label for="modelo">Modelo do trem</label>
 
-                            <div class="row g-4">
-
-                                <div class="col-md-6">
-                                    <div class="card-input">
-                                        <label for="modelo">Modelo do trem</label>
-                                        <input type="text" id="modelo" name="modelo" placeholder="Coloque o modelo" required>
-                                    </div>
+                                    <input
+                                        type="text"
+                                        id="modelo"
+                                        name="modelo"
+                                        value="<?= htmlspecialchars($modelo, ENT_QUOTES, 'UTF-8') ?>"
+                                        placeholder="Coloque o modelo"
+                                        required
+                                    >
                                 </div>
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="card-input">
-                                        <label for="apelido">Digite o apelido do trem</label>
-                                        <input type="text" id="apelido" name="apelido" placeholder="Coloque o apelido" required>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="card-input">
+                                    <label for="apelido">Apelido do trem</label>
+
+                                    <input
+                                        type="text"
+                                        id="apelido"
+                                        name="apelido"
+                                        value="<?= htmlspecialchars($apelido, ENT_QUOTES, 'UTF-8') ?>"
+                                        placeholder="Coloque o apelido"
+                                        required
+                                    >
                                 </div>
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="card-input">
-                                        <label for="operadora">Empresa operadora</label>
-                                        <input type="text" id="operadora" name="operadora" placeholder="Coloque a operadora">
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="card-input">
+                                    <label for="operadora">Empresa operadora</label>
+
+                                    <input
+                                        type="text"
+                                        id="operadora"
+                                        name="operadora"
+                                        value="<?= htmlspecialchars($operadora, ENT_QUOTES, 'UTF-8') ?>"
+                                        placeholder="Coloque a operadora"
+                                    >
                                 </div>
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="card-input">
-                                        <label for="tipo">Tipo do trem</label>
-                                        <input type="text" id="tipo" name="tipo" placeholder="Coloque o tipo" required>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="card-input">
+                                    <label for="tipo">Tipo do trem</label>
+
+                                    <input
+                                        type="text"
+                                        id="tipo"
+                                        name="tipo"
+                                        value="<?= htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8') ?>"
+                                        placeholder="Coloque o tipo"
+                                        required
+                                    >
                                 </div>
+                            </div>
 
-                                <div class="col-md-12">
-                                    <div class="card-input">
-                                        <label for="vagoes">Número de vagões</label>
-                                        <input type="number" id="vagoes" name="vagoes" placeholder="Coloque o número" min="1" required>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="card-input">
+                                    <label for="vagoes">Número de vagões</label>
+
+                                    <input
+                                        type="number"
+                                        id="vagoes"
+                                        name="vagoes"
+                                        value="<?= htmlspecialchars((string)($vagoes ?: ''), ENT_QUOTES, 'UTF-8') ?>"
+                                        placeholder="Coloque o número"
+                                        min="1"
+                                        required
+                                    >
                                 </div>
+                            </div>
 
+                            <div class="col-md-6">
+                                <div class="card-input">
+                                    <label for="id_usuario">
+                                        Funcionário responsável
+                                    </label>
+
+                                    <select
+                                        id="id_usuario"
+                                        name="id_usuario"
+                                        class="form-select"
+                                        required
+                                    >
+                                        <option value="">
+                                            Selecione um responsável
+                                        </option>
+
+                                        <?php foreach ($usuarios as $usuario): ?>
+                                            <option
+                                                value="<?= (int)$usuario['id_usuario'] ?>"
+                                                <?= (string)$id_usuario === (string)$usuario['id_usuario']
+                                                    ? 'selected'
+                                                    : '' ?>
+                                            >
+                                                <?= htmlspecialchars(
+                                                    $usuario['nome'],
+                                                    ENT_QUOTES,
+                                                    'UTF-8'
+                                                ) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
 
                         </div>
-
-                        <div class="col-lg-4 d-flex justify-content-center align-items-center">
-
-                            <div class="botao-container">
-                                <button type="submit" class="btn-enviar">
-                                    Enviar
-                                </button>
-                            </div>
-
-                        </div>
-
                     </div>
-                </form>
 
-            </section>
+                    <div class="col-lg-4 d-flex justify-content-center align-items-center">
+                        <div class="botao-container">
+                            <button
+                                type="submit"
+                                class="btn-enviar"
+                                <?= empty($usuarios) ? 'disabled' : '' ?>
+                            >
+                                Enviar
+                            </button>
+                        </div>
+                    </div>
 
-        </main>
+                </div>
+            </form>
 
-    </div>
+        </section>
+    </main>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

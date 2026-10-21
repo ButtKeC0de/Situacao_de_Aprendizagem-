@@ -1,157 +1,205 @@
 <?php
-
 require_once '../infra/auth.php';
 exigir_login();
 
-
 $trens = [];
-
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-if ($id) {
+$select = "SELECT
+               t.id_trem,
+               t.modelo,
+               t.apelido,
+               t.empresa_operadora,
+               t.tipo_trem,
+               t.numero_vagoes,
+               t.id_usuario,
+               u.nome AS responsavel
+           FROM Trem t
+           LEFT JOIN Usuario u
+               ON u.id_usuario = t.id_usuario";
 
-    $sql = "SELECT
-                id_trem,
-                modelo,
-                apelido,
-                empresa_operadora,
-                tipo_trem,
-                numero_vagoes
-            FROM Trem
-            WHERE id_trem = ?";
+if ($id) {
+    $sql = $select . " WHERE t.id_trem = ?";
 
     $stmt = $conexao->prepare($sql);
-
-    $stmt->bind_param("i", $id);
-
+    $stmt->bind_param('i', $id);
     $stmt->execute();
 
     $resultado = $stmt->get_result();
-
 } else {
-
-    $sql = "SELECT
-                id_trem,
-                modelo,
-                apelido,
-                empresa_operadora,
-                tipo_trem,
-                numero_vagoes
-            FROM Trem
-            ORDER BY id_trem DESC";
-
+    $sql = $select . " ORDER BY t.id_trem DESC";
     $resultado = $conexao->query($sql);
-
 }
 
-
 if ($resultado && $resultado->num_rows > 0) {
-
     while ($row = $resultado->fetch_assoc()) {
         $trens[] = $row;
     }
-
 }
-
 
 if (isset($stmt)) {
     $stmt->close();
 }
-
 ?>
 <!doctype html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Trens</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="stylesheet" href="../Assets/css/trem.css">
     <link rel="stylesheet" href="../Assets/css/home.css">
     <link rel="stylesheet" href="../Assets/css/sidebar.css">
 </head>
-
 <body>
 
-    <div class="app-container">
+<div class="app-container">
+    <?php require '../infra/sidebar.php'; ?>
 
-        <?php require '../infra/sidebar.php'; ?>
+    <main class="content">
+        <section class="painel-cadastro">
 
-        <main class="content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="titulo m-0">Trens Cadastrados</h1>
 
-            <section class="painel-cadastro">
-
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="titulo m-0">Trens Cadastrados</h1>
-                    <?php if (eh_admin()): ?>
-                    <a href="trens_cadastro.php" class="btn btn-dark text-white rounded-pill px-4 py-2">
+                <?php if (eh_admin()): ?>
+                    <a href="trens_cadastro.php"
+                       class="btn btn-dark text-white rounded-pill px-4 py-2">
                         + Cadastrar Novo
                     </a>
-                    <?php endif; ?>
-                </div>
+                <?php endif; ?>
+            </div>
 
-                <?php 
-                if (isset($_SESSION['mensagem'])) {
-                    echo $_SESSION['mensagem'];
-                    unset($_SESSION['mensagem']);
-                }
-                ?>
+            <?php
+            if (isset($_SESSION['mensagem'])) {
+                echo $_SESSION['mensagem'];
+                unset($_SESSION['mensagem']);
+            }
+            ?>
 
-                <div class="table-responsive rounded-4 shadow-sm">
-                    <table class="table table-hover align-middle m-0 text-center custom-table">
-                        <thead>
-                            <tr>
-                                <th>Modelo</th>
-                                <th>Apelido</th>
-                                <th>Operadora</th>
-                                <th>Tipo</th>
-                                <th>Vagões</th>
-                                <?php if (eh_admin()): ?><th>Ações</th><?php endif; ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($trens)): ?>
-                                <?php foreach ($trens as $trem): ?>
-                                    <tr>
-                                        <td class="fw-bold"><?= htmlspecialchars($trem['modelo']) ?></td>
-                                        <td><?= htmlspecialchars($trem['apelido']) ?></td>
-                                        <td><?= htmlspecialchars($trem['empresa_operadora']) ?></td>
-                                        <td><span class="badge bg-secondary"><?= htmlspecialchars($trem['tipo_trem']) ?></span></td>
-                                        <td><?= htmlspecialchars($trem['numero_vagoes']) ?></td>
-                                        <?php if (eh_admin()): ?>
+            <div class="table-responsive rounded-4 shadow-sm">
+                <table class="table table-hover align-middle m-0 text-center custom-table">
+
+                    <thead>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Apelido</th>
+                            <th>Operadora</th>
+                            <th>Tipo</th>
+                            <th>Vagões</th>
+                            <th>Responsável</th>
+
+                            <?php if (eh_admin()): ?>
+                                <th>Ações</th>
+                            <?php endif; ?>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php if (!empty($trens)): ?>
+
+                            <?php foreach ($trens as $trem): ?>
+                                <tr>
+                                    <td class="fw-bold">
+                                        <?= htmlspecialchars(
+                                            $trem['modelo'],
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        ) ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars(
+                                            $trem['apelido'],
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        ) ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars(
+                                            $trem['empresa_operadora'] ?? '',
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        ) ?>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge bg-secondary">
+                                            <?= htmlspecialchars(
+                                                $trem['tipo_trem'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <?= (int)$trem['numero_vagoes'] ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars(
+                                            $trem['responsavel'] ?? 'Não definido',
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        ) ?>
+                                    </td>
+
+                                    <?php if (eh_admin()): ?>
                                         <td>
-                                            <a href="trens_editar.php?id=<?= $trem['id_trem'] ?>" class="btn btn-warning btn-sm text-white me-1 rounded-3" title="Editar">
+                                            <a
+                                                href="trens_editar.php?id=<?= (int)$trem['id_trem'] ?>"
+                                                class="btn btn-warning btn-sm text-white me-1 rounded-3"
+                                                title="Editar"
+                                            >
                                                 <i class="bi bi-pencil-fill"></i>
                                             </a>
-                                            
-                                            <a href="trens_excluir.php?id=<?= $trem['id_trem'] ?>" class="btn btn-danger btn-sm rounded-3" onclick="return confirm('Tem certeza que deseja excluir este trem?');" title="Excluir">
+
+                                            <a
+                                                href="trens_excluir.php?id=<?= (int)$trem['id_trem'] ?>"
+                                                class="btn btn-danger btn-sm rounded-3"
+                                                onclick="return confirm('Tem certeza que deseja excluir este trem?');"
+                                                title="Excluir"
+                                            >
                                                 <i class="bi bi-trash-fill"></i>
                                             </a>
                                         </td>
-                                        <?php endif; ?>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="<?= eh_admin() ? 6 : 5 ?>" class="text-muted py-4">Nenhum trem cadastrado até o momento.</td>
+                                    <?php endif; ?>
                                 </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                            <?php endforeach; ?>
 
-            </section>
+                        <?php else: ?>
 
-        </main>
+                            <tr>
+                                <td
+                                    colspan="<?= eh_admin() ? 7 : 6 ?>"
+                                    class="text-muted py-4"
+                                >
+                                    Nenhum trem cadastrado até o momento.
+                                </td>
+                            </tr>
 
-    </div>
+                        <?php endif; ?>
+                    </tbody>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+                </table>
+            </div>
+
+        </section>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

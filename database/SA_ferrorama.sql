@@ -6,11 +6,13 @@ CREATE TABLE IF NOT EXISTS Perfil (
     nome_perfil VARCHAR(50) NOT NULL UNIQUE
 );
 
-INSERT INTO Perfil (id_perfil, nome_perfil) VALUES 
-(1, 'Administrador'),
-(2, 'Funcionario'),
-(3, 'Usuario')
-ON DUPLICATE KEY UPDATE nome_perfil=VALUES(nome_perfil);
+INSERT INTO Perfil (id_perfil, nome_perfil)
+VALUES
+    (1, 'Administrador'),
+    (2, 'Funcionario'),
+    (3, 'Usuario')
+ON DUPLICATE KEY UPDATE
+    nome_perfil = VALUES(nome_perfil);
 
 CREATE TABLE IF NOT EXISTS Usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,13 +22,23 @@ CREATE TABLE IF NOT EXISTS Usuario (
     id_perfil INT NOT NULL,
 
     FOREIGN KEY (id_perfil)
-    REFERENCES Perfil(id_perfil)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE
+        REFERENCES Perfil(id_perfil)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
 );
 
-INSERT IGNORE INTO Usuario (nome, email, senha, id_perfil) VALUES
-('caio123', 'caio123@railview.com', '$2y$10$1Ne6Q8VbsDZcU/0qcupHY.eDoISn6Bbrk3hA0tl9HcT2vf4RMceni', 1);
+INSERT IGNORE INTO Usuario (
+    nome,
+    email,
+    senha,
+    id_perfil
+)
+VALUES (
+    'caio123',
+    'caio123@railview.com',
+    '$2y$10$1Ne6Q8VbsDZcU/0qcupHY.eDoISn6Bbrk3hA0tl9HcT2vf4RMceni',
+    1
+);
 
 CREATE TABLE IF NOT EXISTS Trem (
     id_trem INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,7 +46,14 @@ CREATE TABLE IF NOT EXISTS Trem (
     tipo_trem VARCHAR(50) NOT NULL,
     empresa_operadora VARCHAR(150),
     modelo VARCHAR(100) NOT NULL,
-    numero_vagoes INT NOT NULL
+    numero_vagoes INT NOT NULL,
+    id_usuario INT NULL,
+
+    CONSTRAINT fk_trem_usuario
+        FOREIGN KEY (id_usuario)
+        REFERENCES Usuario(id_usuario)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Sensor (
@@ -46,9 +65,9 @@ CREATE TABLE IF NOT EXISTS Sensor (
     id_trem INT NOT NULL,
 
     FOREIGN KEY (id_trem)
-    REFERENCES Trem(id_trem)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+        REFERENCES Trem(id_trem)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Rota (
@@ -71,14 +90,14 @@ CREATE TABLE IF NOT EXISTS Historico_Rota (
     id_rota INT NOT NULL,
 
     FOREIGN KEY (id_trem)
-    REFERENCES Trem(id_trem)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+        REFERENCES Trem(id_trem)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
     FOREIGN KEY (id_rota)
-    REFERENCES Rota(id_rota)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+        REFERENCES Rota(id_rota)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Alerta (
@@ -89,9 +108,9 @@ CREATE TABLE IF NOT EXISTS Alerta (
     id_sensor INT NOT NULL,
 
     FOREIGN KEY (id_sensor)
-    REFERENCES Sensor(id_sensor)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+        REFERENCES Sensor(id_sensor)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Manutencao (
@@ -102,7 +121,7 @@ CREATE TABLE IF NOT EXISTS Manutencao (
     id_trem INT NOT NULL,
 
     FOREIGN KEY (id_trem)
-    REFERENCES Trem(id_trem)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+        REFERENCES Trem(id_trem)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );

@@ -163,35 +163,14 @@ $editando = !empty($rotaForm['id_rota']);
 
     <link rel="stylesheet" href="../Assets/css/rotas.css">
 
+    <link rel="stylesheet" href="../Assets/css/sidebar.css">
 </head>
 
 <body>
     <div class="tela">
 
 
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <img src="../Assets/logos/Logo.png" alt="Logo">
-            </div>
-
-            <nav class="sidebar-nav">
-                <a href="../public/criacao_rotas.php" title="Rotas" class="ativo">
-                    <img src="../Assets/logos/icon_rotas.png" alt="Rotas">
-                </a>
-                <a href="../public/trens_home.php" title="Trens">
-                    <img src="../Assets/logos/icon_trem.png" alt="Trens">
-                </a>
-                <a href="../public/sensor_home.php" title="Sensores">
-                    <img src="../Assets/logos/icon_sensores.png" alt="Sensores">
-                </a>
-            </nav>
-
-            <div class="sidebar-logout">
-                <a href="../public/logout.php" title="Sair">
-                    <img src="../Assets/logos/icon_saida.png" alt="Sair">
-                </a>
-            </div>
-        </aside>
+        <?php require '../infra/sidebar.php'; ?>
 
 
         <main class="conteudo">

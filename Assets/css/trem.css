@@ -21,8 +21,6 @@ body {
 }
 
 .content {
-    margin-left: 120px; 
-    width: calc(100vw - 120px); 
     height: 100vh;
     padding: 30px;
     background: #dfe3e8;
@@ -30,33 +28,6 @@ body {
     justify-content: center; 
     align-items: center;     
     overflow-y: auto;
-}
-
-.principal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 120px;
-    background: #F2A03A;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    z-index: 1000;
-}
-
-.logos {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-#logos_barra_lateral {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
 }
 
 .painel-cadastro {

@@ -13,13 +13,6 @@ body {
     padding: 0;
 }
 
-.principal {
-    background-color: rgb(248, 161, 61);
-    padding: 30px;
-    display: flex;
-    min-height: 100vh;
-}
-
 main {
     display: flex;
     justify-content: center;

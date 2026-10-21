@@ -1,0 +1,123 @@
+:root {
+    --sidebar-largura: 100px;
+    --sidebar-cor: #f2a03a;
+}
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1000;
+    width: var(--sidebar-largura);
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--sidebar-cor);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-logo {
+    display: block;
+    margin-bottom: 35px;
+}
+
+.sidebar-logo img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    display: block;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.sidebar-nav a,
+.sidebar-logout a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: transparent !important;
+    border: none;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.sidebar-nav a:hover,
+.sidebar-logout a:hover,
+.sidebar-nav a:focus-visible,
+.sidebar-logout a:focus-visible {
+    outline: none;
+    transform: scale(1.08);
+}
+
+.sidebar-nav a img,
+.sidebar-logout a img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.sidebar-logout {
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+.sidebar ~ .content,
+.sidebar ~ .conteudo {
+    margin-left: var(--sidebar-largura);
+    width: auto;
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        inset: auto 0 0;
+        width: 100%;
+        height: 78px;
+        padding: 8px 16px;
+        flex-direction: row;
+        justify-content: space-around;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-nav {
+        flex: initial;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 8px;
+    }
+
+    .sidebar-nav a,
+    .sidebar-logout a {
+        width: 56px;
+        height: 56px;
+    }
+
+    .sidebar-nav a img,
+    .sidebar-logout a img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .sidebar-logout {
+        margin: 0;
+    }
+
+    .sidebar ~ .content,
+    .sidebar ~ .conteudo {
+        margin-left: 0;
+        padding-bottom: 105px;
+    }
+}

@@ -27,45 +27,14 @@ $stmt->close();
 
     <link rel="stylesheet" href="../Assets/css/trem.css">
     <link rel="stylesheet" href="../Assets/css/home.css">
+    <link rel="stylesheet" href="../Assets/css/sidebar.css">
 </head>
 
 <body>
 
     <div class="app-container">
 
-        <aside class="principal">
-            <div>
-                <div>
-                    <img class="logos" src="../Assets/logos/Logo.png" alt="Logo">
-                </div>
-
-                <div id="logos_barra_lateral">
-                    <div>
-                        <a href="../public/criacao_rotas.php">
-                            <img class="logos" src="../Assets/logos/icon_rotas.png" alt="Rotas">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/trens_home.php">
-                            <img class="logos" src="../Assets/logos/icon_trem.png" alt="Trens">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/sensor_home.php">
-                            <img class="logos" src="../Assets/logos/icon_sensores.png" alt="Sensores">
-                        </a>
-                    </div>
-
-                    <div>
-                        <a href="../public/logout.php">
-                            <img class="logos" src="../Assets/logos/icon_saida.png" alt="Sair">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </aside>
+        <?php require '../infra/sidebar.php'; ?>
 
         <main class="content">
 

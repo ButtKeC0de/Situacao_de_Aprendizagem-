@@ -22,7 +22,7 @@ $ativoSensores = str_starts_with($paginaAtual, 'sensor_') ? 'ativo' : '';
     </nav>
 
     <div class="sidebar-logout">
-        <a href="logout.php" title="Sair">
+        <a href="../index.html" title="Sair">
             <img src="../Assets/logos/icon_saida.png" alt="Sair">
         </a>
     </div>

@@ -42,52 +42,7 @@ exigir_login();
       <video id="video_inicial" src="../Assets/videos/trem_telainicial.mp4" autoplay loop muted playsinline></video>
     </div>
 
-    <section class="conteudo-cards py-5">
-      <div class="container">
-        <h2 class="text-center mb-5 fw-bold display-5 text-dark">Quem Somos</h2>
-        
-        <div class="row row-cols-1 row-cols-md-2 g-4 align-items-stretch justify-content-center wrapper-cards" tabindex="0">
-          
-          <div class="col card-anima-item card-esquerda">
-            <div class="card card-custom-laranja border-0 p-4 h-100">
-              <h1 class="mid-btt fw-bold mb-4">Rail View</h1>
-              <div class="card-body p-0">
-                <p class="card-text">
-                  Rail View nasceu com a missão clara e audaciosa de revolucionar e transformar a
-                  gestão ferroviária global. Unimos tecnologia de ponta e inovação para moldar a infraestrutura do
-                  amanhã, desenvolvendo soluções avançadas que integram visão computacional, Internet das Coisas (IoT) e
-                  análise de dados em tempo real.
-                </p>
-                <p class="card-text mt-3">
-                  Nossa marca e nossas tecnologias foram meticulosamente projetadas para responder às demandas mais
-                  complexas de um setor vital, onde margens para erro não existem. Entregamos o que o mercado
-                  ferroviário exige como prioridade absoluta:
-                </p>
-                
-                <div class="card-text-destaque mt-4">
-                  <p><strong>Precisão Cirúrgica:</strong> Monitoramento rigoroso e diagnósticos exatos de ativos e trilhos.</p>
-                  <p><strong>Segurança Inegociável:</strong> Prevenção de falhas e mitigação de riscos para proteger vidas e cargas.</p>
-                  <p><strong>Alta Eficiência Operacional:</strong> Maximização da produtividade, redução de custos e otimização do tempo de atividade.</p>
-                </div>
-
-                <p class="card-text mt-4">
-                  Na Rail View, transformamos dados complexos em decisões inteligentes e imediatas, garantindo que o
-                  setor ferroviário siga avançando com máxima performance e total confiabilidade.
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col card-anima-item card-direita">
-            <div class="card card-custom-laranja border-0 p-4 h-100 d-flex align-items-center justify-content-center">
-              <img src="../Assets/Images/trem-NEVE.jpg" class="img-fluid rounded-4 img-trem-fix" alt="Trem na Neve">
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  </main>
+    
 
   <footer>
   </footer>

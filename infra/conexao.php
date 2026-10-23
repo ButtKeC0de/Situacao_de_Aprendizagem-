@@ -4,7 +4,7 @@ $host = "localhost";
 $usuario = "root";
 $senha = "";
 $banco = "rail_view_db";
-$porta = 3398;
+$porta = 8080;
 
 $conexao = new mysqli($host, $usuario, $senha, $banco, $porta);
 

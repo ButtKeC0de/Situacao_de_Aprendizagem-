@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Preencha os campos obrigatórios e selecione um responsável válido.
         </div>";
     } else {
-        // Confirma que o usuário selecionado realmente existe.
+  
         $stmt_usuario = $conexao->prepare(
             "SELECT id_usuario
              FROM Usuario

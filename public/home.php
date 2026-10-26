@@ -14,8 +14,8 @@ exigir_login();
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../Assets/css/home.css">
+  
 </head>
-
 <body>
 <header class="navbar">    
   <nav class="nav-links w-100">
@@ -41,12 +41,30 @@ exigir_login();
     <div class="vid_1">
       <video id="video_inicial" src="../Assets/videos/trem_telainicial.mp4" autoplay loop muted playsinline></video>
     </div>
+      
+<section class="clima-card">
+    <div>
+        <p class="clima-label">MONITORAMENTO CLIMÁTICO</p>
+        <h2>Condições meteorológicas</h2>
+        <p id="clima-local">Joinville, SC</p>
+    </div>
+
+    <div class="clima-info">
+        <span id="clima-icone">🌤️</span>
+        <strong id="clima-temperatura">-- °C</strong>
+        <span id="clima-condicao">Consultando clima...</span>
+    </div>
+
+    <p id="clima-atualizacao">
+        Aguardando dados da API...
+    </p>
+</section>
 
     
 
   <footer>
   </footer>
-
+  <script src="../scripts/clima.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

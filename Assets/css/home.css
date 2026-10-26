@@ -108,3 +108,67 @@ video {
     height: 50px;
     border-radius: 30px;
     margin: auto;
+}
+
+.clima-card {
+    margin: 28px auto;
+    padding: 24px;
+    width: min(92%, 900px);
+    border-radius: 16px;
+    background: #111827;
+    color: #f9fafb;
+    border: 1px solid #374151;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.clima-label {
+    color: #2dd4bf;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.clima-card h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+#clima-local,
+#clima-atualizacao {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.clima-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 22px 0;
+}
+
+#clima-icone {
+    font-size: 42px;
+}
+
+#clima-temperatura {
+    font-size: 38px;
+}
+
+#clima-condicao {
+    color: #d1d5db;
+}
+
+@media (max-width: 600px) {
+    .clima-card {
+        padding: 18px;
+    }
+
+    .clima-info {
+        gap: 10px;
+    }
+
+    #clima-temperatura {
+        font-size: 30px;
+    }
+}
